@@ -1,3 +1,30 @@
 page-login {
+    ion-img {
+        background-color: transparent;
+        display: inherit;
+    }
+     ion-col{
+        text-align: center;
+        padding-bottom: 10% !important;
+        padding-top: 10% !important;
+     }
 
+     ion-item{
+         border-top: none !important;
+     }
+
+     .entrar{
+        text-align: right;
+        font-size: 20px;
+        float: right;
+     }
+     .register{
+        font-size: 20px;
+        float: left;
+     }
+
+     a{
+         text-decoration: none;
+     }
 }
+
