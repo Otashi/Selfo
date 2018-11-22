@@ -22,4 +22,8 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
 
+  doRegister(){
+    this.navCtrl.push("RegistroPage");
+  }
+
 }

@@ -1,0 +1,56 @@
+<!--
+  Generated template for the RegistroPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Selfo</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+    <ion-row>
+      <ion-col>
+        <img no-margin no-padding full src="../assets/imgs/logo_selfo.png" />
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center no-padding>
+          <h3>Registro</h3>
+      </ion-col>
+    </ion-row>
+    <ion-item>
+        <ion-label color="primary" floating>Nombre completo</ion-label>
+        <ion-input type="text" [(ngModel)]='myUser.name'></ion-input>
+      </ion-item>
+    <ion-item>
+      <ion-label color="primary" floating>Email</ion-label>
+      <ion-input type="email" [(ngModel)]='myUser.email'></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="primary" floating>Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]='myUser.password'></ion-input>
+    </ion-item> 
+    <ion-item>
+        <ion-label color="primary" floating>Repite contraseña</ion-label>
+        <ion-input type="password"></ion-input>
+    </ion-item> 
+    <ion-item>
+        <ion-label color="primary" floating>Telefono</ion-label>
+        <ion-input type="text" [(ngModel)]='myUser.phoneNumber'></ion-input>
+    </ion-item> 
+    <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+          </ion-col>
+          <ion-col col-4>
+              <button ion-button primary large (click)="saveUser();">Registrar</button>
+          </ion-col>
+          <ion-col col-4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+</ion-content>
