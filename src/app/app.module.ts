@@ -5,14 +5,18 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { RegistroPage } from '../pages/registro/registro';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 
 import { AngularFireModule } from 'angularfire2';
-import { FIREBASE_CONFIG } from './firebase.credentials';
+import { firebaseConfig } from './firebase.credentials';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AuthService } from '../services/auth.service';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +28,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
   ],
   bootstrap: [IonicApp],
@@ -37,7 +41,9 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AngularFireAuth,
+    AuthService
   ]
 })
 export class AppModule {}
