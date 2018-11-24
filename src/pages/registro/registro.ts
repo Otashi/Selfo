@@ -51,30 +51,51 @@ export class RegistroPage {
     alert.present();
   }
 
-  saveUser(){
-    console.log(this.myUser.name); 
-    this.db.list('users').push(this.myUser);
-  }
+  saveUser(uid: string){
+    console.log(this.myUser.name);
 
+  this.db.object('/users/' + uid)
+    .update({
+      nombre: this.myUser.name,
+      email: this.myUser.email,
+      telefono: this.myUser.phoneNumber}); 
+  }
   signup() {
 		//let data = this.form.value;
 		let credentials = {
 			email: this.myUser.email,
 			password: this.myUser.password
     };
-		this.auth.signUp(credentials).then(
-			() => this.navCtrl.setRoot(HomePage),
+      this.auth.signUp(credentials).then(
+      res => {
+        console.log(res.user.uid);
+        this.saveUser(res.user.uid);
+        this.navCtrl.setRoot(HomePage);
+
+      },
       error => {this.signupError = error.message;this.Myalert(error.message);}
     );
   }
 
   formValidation(){
     console.log(this.myUser.password + ' / ' + this.passwordRepited);
-    if(this.myUser.password === this.passwordRepited){
+    if(this.myUser.name == undefined ||  this.myUser.name == ''){
+      this.Myalert("El campo de nombre es obligatorio");
+    } else if (!this.validateEmail(this.myUser.email)){
+      this.Myalert("El email introducido no es correcto");
+    }else if(this.myUser.password =='' || this.myUser.password == undefined){
+      this.Myalert("El campo de contraseña es obligatorio");
+    }else if(this.myUser.password !== this.passwordRepited){
+      this.Myalert("Las contraseñas no coinciden");
+    } else if(this.myUser.password.length < 6){
+      this.Myalert("Las contraseña tiene que tener más de 6 caracteres");
+    } else {
       this.signup();
     }
-    else {
-      this.Myalert("Las contraseñas no coinciden");
-    }
+  }
+
+  validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
   }
 }
