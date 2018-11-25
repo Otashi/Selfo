@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { AuthService } from '../../services/auth.service';
-import { AlertController } from 'ionic-angular';
 import { HomePage } from '../home/home';
+import { validateEmail } from '../../utils/helper';
+import { myAlert } from '../../utils/helper';
 
 /**
  * Generated class for the LoginPage page.
@@ -36,12 +37,13 @@ export class LoginPage {
   }
 
   doLogin(){
-    if(!this.validateEmail(this.myEmail)){
+    if(!validateEmail(this.myEmail)){
       console.log(this.myEmail + ' / ' + this.myPassword);
-      this.myAlert("Email no válido")
+      console.log(this.alertCtrl);
+      myAlert("Email no válido", 'Error', this.alertCtrl);
     }
     else if (this.myPassword==undefined){
-      this.myAlert("El campo de contraseña es obligatorio")
+      myAlert("El campo de contraseña es obligatorio", 'Error', this.alertCtrl);
     }
     else{
       let credentials = {
@@ -51,25 +53,11 @@ export class LoginPage {
       this.auth.signInWithEmail(credentials)
 			.then(
 				() => this.navCtrl.setRoot(HomePage),
-				error => this.myAlert("Email o contraseña incorrectas")
+				error => myAlert("Email o contraseña incorrectas", 'Error', this.alertCtrl)
 			);
     }
   }
 
-  myAlert(message: string){
-    let alert = this.alertCtrl.create({
-      title: 'Error',
-      subTitle: message,
-      buttons: ['Aceptar']
-    });
-    alert.present();
-  }
-
-  validateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-  }
-  
   forgotPassword(){
     this.navCtrl.push("ResetpasswordPage");
   }

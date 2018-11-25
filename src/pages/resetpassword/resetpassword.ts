@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
-import { AlertController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+import { validateEmail } from '../../utils/helper';
+import { myAlert } from '../../utils/helper';
 
 /**
  * Generated class for the ResetpasswordPage page.
@@ -20,8 +21,7 @@ export class ResetpasswordPage {
 
   email: string
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthService, 
-    public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthService, public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -30,31 +30,15 @@ export class ResetpasswordPage {
 
   resetPassword(email: string) {
     this.auth.resetPassword(email);
-    this.myAlert("Email de reinicio de contraseña enviado");
+    myAlert("Email de reinicio de contraseña enviado", 'Enviado', this.alertCtrl);
     this.navCtrl.setRoot(LoginPage);
   }
 
-
-  myAlert(message: string){
-    let alert = this.alertCtrl.create({
-      title: 'Error',
-      subTitle: message,
-      buttons: ['Aceptar']
-    });
-    alert.present();
-  }
-
   formValidation(){
-    if (!this.validateEmail(this.email)){
-      this.myAlert("El email introducido no es correcto");
+    if (!validateEmail(this.email)){
+      myAlert("El email introducido no es correcto", 'Error', this.alertCtrl);
     }else {
       this.resetPassword(this.email);
     }
   }
-
-  validateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-  }
-
 }

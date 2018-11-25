@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -7,6 +7,8 @@ import { ALLOW_MULTIPLE_PLATFORMS } from '@angular/core/src/application_ref';
 import { User } from '../../model/user'; 
 import { AuthService } from '../../services/auth.service';
 import { HomePage } from '../home/home';
+import { validateEmail } from '../../utils/helper';
+import { myAlert } from '../../utils/helper';
 
 /**
  * Generated class for the RegistroPage page.
@@ -20,7 +22,7 @@ import { HomePage } from '../home/home';
   selector: 'page-registro',
   templateUrl: 'registro.html',
 })
-export class RegistroPage {
+export class RegistroPage{
 
   myUser: User = {
     name: '',
@@ -40,15 +42,6 @@ export class RegistroPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegistroPage');
-  }
-
-  myAlert(message: string){
-    let alert = this.alertCtrl.create({
-      title: 'Error',
-      subTitle: message,
-      buttons: ['Aceptar']
-    });
-    alert.present();
   }
 
   saveUser(uid: string){
@@ -73,29 +66,24 @@ export class RegistroPage {
         this.navCtrl.setRoot(HomePage);
 
       },
-      error => {this.signupError = error.message;this.myAlert(error.message);}
+      error => {this.signupError = error.message;myAlert(error.message, 'Error', this.alertCtrl);}
     );
   }
 
   formValidation(){
     console.log(this.myUser.password + ' / ' + this.passwordRepited);
     if(this.myUser.name == undefined ||  this.myUser.name == ''){
-      this.myAlert("El campo de nombre es obligatorio");
-    } else if (!this.validateEmail(this.myUser.email)){
-      this.myAlert("El email introducido no es correcto");
+      myAlert("El campo de nombre es obligatorio", 'Error', this.alertCtrl);
+    } else if (!validateEmail(this.myUser.email)){
+      myAlert("El email introducido no es correcto", 'Error', this.alertCtrl);
     }else if(this.myUser.password =='' || this.myUser.password == undefined){
-      this.myAlert("El campo de contraseña es obligatorio");
+      myAlert("El campo de contraseña es obligatorio", 'Error', this.alertCtrl);
     }else if(this.myUser.password !== this.passwordRepited){
-      this.myAlert("Las contraseñas no coinciden");
+      myAlert("Las contraseñas no coinciden", 'Error', this.alertCtrl);
     } else if(this.myUser.password.length < 6){
-      this.myAlert("Las contraseña tiene que tener más de 6 caracteres");
+      myAlert("Las contraseña tiene que tener más de 6 caracteres", 'Error', this.alertCtrl);
     } else {
       this.signup();
     }
-  }
-
-  validateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
   }
 }
