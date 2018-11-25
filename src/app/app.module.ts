@@ -21,7 +21,6 @@ import { AuthService } from '../services/auth.service';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
     ListPage,
     LoginPage,
   ],
@@ -34,7 +33,6 @@ import { AuthService } from '../services/auth.service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
     ListPage,
     LoginPage,
   ],

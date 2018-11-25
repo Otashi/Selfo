@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { AuthService } from '../../services/auth.service';
-import { HomePage } from '../home/home';
+
 import { validateEmail } from '../../utils/helper';
 import { myAlert } from '../../utils/helper';
 
@@ -52,7 +52,7 @@ export class LoginPage {
       };
       this.auth.signInWithEmail(credentials)
 			.then(
-				() => this.navCtrl.setRoot(HomePage),
+				() => this.navCtrl.setRoot('HomePage'),
 				error => myAlert("Email o contraseña incorrectas", 'Error', this.alertCtrl)
 			);
     }

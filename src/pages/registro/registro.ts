@@ -6,7 +6,6 @@ import { ALLOW_MULTIPLE_PLATFORMS } from '@angular/core/src/application_ref';
 
 import { User } from '../../model/user'; 
 import { AuthService } from '../../services/auth.service';
-import { HomePage } from '../home/home';
 import { validateEmail } from '../../utils/helper';
 import { myAlert } from '../../utils/helper';
 
@@ -63,7 +62,7 @@ export class RegistroPage{
       res => {
         console.log(res.user.uid);
         this.saveUser(res.user.uid);
-        this.navCtrl.setRoot(HomePage);
+        this.navCtrl.setRoot('HomePage');
 
       },
       error => {this.signupError = error.message;myAlert(error.message, 'Error', this.alertCtrl);}
