@@ -25,14 +25,20 @@ export class AuthService {
 	
 	get authenticated(): boolean {
 		return this.user !== null;
-	  }
+	}
 
-	  getEmail() {
-		return this.user && this.user.email;
-	  }
+	getEmail() {
+	return this.user && this.user.email;
+	}
 
-	  signOut(): Promise<void> {
+	signOut(): Promise<void> {
 		return this.afAuth.auth.signOut();
-	  }
+	}
+		
+	resetPassword(email: string) {
+		return this.afAuth.auth.sendPasswordResetEmail(email)
+			.then(() => console.log("email sent"))
+			.catch((error) => console.log(error))
+	}
 
 }

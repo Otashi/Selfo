@@ -38,10 +38,10 @@ export class LoginPage {
   doLogin(){
     if(!this.validateEmail(this.myEmail)){
       console.log(this.myEmail + ' / ' + this.myPassword);
-      this.Myalert("Email no válido")
+      this.myAlert("Email no válido")
     }
     else if (this.myPassword==undefined){
-      this.Myalert("El campo de contraseña es obligatorio")
+      this.myAlert("El campo de contraseña es obligatorio")
     }
     else{
       let credentials = {
@@ -51,12 +51,12 @@ export class LoginPage {
       this.auth.signInWithEmail(credentials)
 			.then(
 				() => this.navCtrl.setRoot(HomePage),
-				error => this.Myalert("Email o contraseña incorrectas")
+				error => this.myAlert("Email o contraseña incorrectas")
 			);
     }
   }
 
-  Myalert(message: string){
+  myAlert(message: string){
     let alert = this.alertCtrl.create({
       title: 'Error',
       subTitle: message,
@@ -70,4 +70,7 @@ export class LoginPage {
     return re.test(email);
   }
   
+  forgotPassword(){
+    this.navCtrl.push("ResetpasswordPage");
+  }
 }

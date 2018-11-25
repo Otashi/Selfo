@@ -42,7 +42,7 @@ export class RegistroPage {
     console.log('ionViewDidLoad RegistroPage');
   }
 
-  Myalert(message: string){
+  myAlert(message: string){
     let alert = this.alertCtrl.create({
       title: 'Error',
       subTitle: message,
@@ -73,22 +73,22 @@ export class RegistroPage {
         this.navCtrl.setRoot(HomePage);
 
       },
-      error => {this.signupError = error.message;this.Myalert(error.message);}
+      error => {this.signupError = error.message;this.myAlert(error.message);}
     );
   }
 
   formValidation(){
     console.log(this.myUser.password + ' / ' + this.passwordRepited);
     if(this.myUser.name == undefined ||  this.myUser.name == ''){
-      this.Myalert("El campo de nombre es obligatorio");
+      this.myAlert("El campo de nombre es obligatorio");
     } else if (!this.validateEmail(this.myUser.email)){
-      this.Myalert("El email introducido no es correcto");
+      this.myAlert("El email introducido no es correcto");
     }else if(this.myUser.password =='' || this.myUser.password == undefined){
-      this.Myalert("El campo de contraseña es obligatorio");
+      this.myAlert("El campo de contraseña es obligatorio");
     }else if(this.myUser.password !== this.passwordRepited){
-      this.Myalert("Las contraseñas no coinciden");
+      this.myAlert("Las contraseñas no coinciden");
     } else if(this.myUser.password.length < 6){
-      this.Myalert("Las contraseña tiene que tener más de 6 caracteres");
+      this.myAlert("Las contraseña tiene que tener más de 6 caracteres");
     } else {
       this.signup();
     }
