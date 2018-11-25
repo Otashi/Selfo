@@ -1,5 +1,7 @@
 {
   "name": "Selfo",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }
