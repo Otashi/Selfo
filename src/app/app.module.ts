@@ -16,6 +16,8 @@ import { firebaseConfig } from './firebase.credentials';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthService } from '../services/auth.service';
+import { MenuPage } from '../pages/menu/menu';
+import { MenuService } from '../services/menu.service';
 
 
 @NgModule({
@@ -23,6 +25,7 @@ import { AuthService } from '../services/auth.service';
     MyApp,
     ListPage,
     LoginPage,
+    MenuPage,
   ],
   imports: [
     BrowserModule,
@@ -35,13 +38,15 @@ import { AuthService } from '../services/auth.service';
     MyApp,
     ListPage,
     LoginPage,
+    MenuPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AngularFireAuth,
-    AuthService
+    AuthService,
+    MenuService
   ]
 })
 export class AppModule {}

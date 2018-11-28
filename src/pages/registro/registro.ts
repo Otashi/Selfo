@@ -4,7 +4,7 @@ import { AlertController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ALLOW_MULTIPLE_PLATFORMS } from '@angular/core/src/application_ref';
 
-import { User } from '../../model/user'; 
+import { User } from '../../model/user';
 import { AuthService } from '../../services/auth.service';
 import { validateEmail } from '../../utils/helper';
 import { myAlert } from '../../utils/helper';
@@ -27,12 +27,12 @@ export class RegistroPage{
     name: '',
     email: '',
     password: '',
-    phoneNumber: ''
+    phoneNumber: '',
   };
   signupError: string;
   passwordRepited: string;
-  
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public db: AngularFireDatabase,
     private auth: AuthService) {
 
@@ -50,7 +50,7 @@ export class RegistroPage{
     .update({
       nombre: this.myUser.name,
       email: this.myUser.email,
-      telefono: this.myUser.phoneNumber}); 
+      telefono: this.myUser.phoneNumber});
   }
   signup() {
 		//let data = this.form.value;

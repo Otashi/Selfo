@@ -20,7 +20,7 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthService, 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthService,
     private qrScanner: QRScanner) {
     if(!this.auth.authenticated){
       console.log("Not logged");
@@ -36,7 +36,7 @@ export class HomePage {
   }
 
   scanQR(){
-    this.qrScanner.prepare()
+    /*this.qrScanner.prepare()
   .then((status: QRScannerStatus) => {
      if (status.authorized) {
        // camera permission was granted
@@ -58,7 +58,8 @@ export class HomePage {
        // permission was denied, but not permanently. You can ask for permission again at a later time.
      }
   })
-  .catch((e: any) => console.log('Error is', e));
+  .catch((e: any) => console.log('Error is', e));*/
+
   }
 
 }
