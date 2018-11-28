@@ -1,22 +1,24 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList  } from 'angularfire2/database';
 import { Item } from '../model/item'
-import { tap, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs-compat';
 
 @Injectable()
 export class MenuService {
 
-    itemListRef : AngularFireList<Item> = null;
-
     constructor(private db: AngularFireDatabase) {
-      this.itemListRef = db.list('/items');
     }
 
-    /*getMenuList() {
-        return this.itemListRef;
-    }*/
+    getItemList() {
+      this.db.list('/items').valueChanges().subscribe((datas) => {
+        console.log("datas", datas)
+        return datas;
+      },(err)=>{
+         console.log("probleme : ", err)
+      });
 
+    }
+    /*
     addNote(note: Item) {
         //return this.itemListRef.pus
         console.log(note);
@@ -37,5 +39,5 @@ export class MenuService {
 
     getMenuList(): AngularFireList<Item> {
       return this.itemListRef;
-    }
+    }*/
 }
