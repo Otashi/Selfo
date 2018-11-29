@@ -31,7 +31,7 @@ export class MenuPage {
     idRestaurante: '',
   };
 
-  miRestaurante: Restaurante;
+  public miRestaurante: Restaurante;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService,
     public restauranteService: RestauranteService) {
@@ -39,6 +39,7 @@ export class MenuPage {
       restauranteService.getRestaurante().subscribe(value => {
         console.log(value.fotoRestaurante);
         this.miRestaurante = value;
+        console.log(this.miRestaurante);
       })
 
       menuService.getItemList().subscribe(values => {

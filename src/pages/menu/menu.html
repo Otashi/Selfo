@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>menu</ion-title>
+    <ion-title>{{miRestaurante?.nombre}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,8 +15,7 @@
 
 <ion-content padding>
   <ion-item>
-
-  {{miRestaurante.fotoRestaurante}}
+    <img src='{{miRestaurante?.fotoRestaurante}}'>
   </ion-item>
   <ion-list>
     <ion-item text-wrap *ngFor="let item of itemList">
