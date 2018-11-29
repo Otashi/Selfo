@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList  } from 'angularfire2/database';
-import { Item } from '../model/item'
 import { Observable } from 'rxjs-compat';
+import { Restaurante } from '../model/restaurante';
 
 @Injectable()
-export class MenuService {
+export class RestauranteService {
 
-  private itemList: Observable<Item[]>;
+  private rest: Observable<Restaurante>;
+  idRestaurante: string = '0';
 
   constructor(private db: AngularFireDatabase) {
-    this.itemList = db.list<Item>('/items').valueChanges();
-    console.log(this.itemList);
+    this.rest = db.object<Restaurante>('/restaurantes/'+ this.idRestaurante).valueChanges();
+    console.log(this.rest);
   }
 
-  getItemList() {
-    return this.itemList;
+  getRestaurante() {
+    return this.rest;
     /*this.db.list('/items').valueChanges().subscribe((datas) => {
       console.log("datas", datas)
       this.itemList = datas;

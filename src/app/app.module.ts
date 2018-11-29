@@ -18,6 +18,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthService } from '../services/auth.service';
 import { MenuPage } from '../pages/menu/menu';
 import { MenuService } from '../services/menu.service';
+import { RestauranteService } from '../services/restaurante.service';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { MenuService } from '../services/menu.service';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AngularFireAuth,
     AuthService,
-    MenuService
+    MenuService,
+    RestauranteService
   ]
 })
 export class AppModule {}

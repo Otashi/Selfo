@@ -14,7 +14,20 @@
 
 
 <ion-content padding>
-    <ion-item *ngFor="let item of itemList">
-      {{item.titulo}}
+  <ion-item>
+
+  {{miRestaurante.fotoRestaurante}}
+  </ion-item>
+  <ion-list>
+    <ion-item text-wrap *ngFor="let item of itemList">
+      <ion-thumbnail item-left>
+        <img src="{{item.urlImage}}">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ item.titulo }}</h2>
+        <p>{{ item.descripcion }}</p>
+        <p class="precio">{{item.precio}} €</p>
+      </ion-label>
     </ion-item>
+  </ion-list>
 </ion-content>

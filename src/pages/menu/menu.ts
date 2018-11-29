@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Item } from '../../model/item';
 import { MenuService } from '../../services/menu.service'
+import { RestauranteService } from '../../services/restaurante.service'
 import { Observable } from 'rxjs-compat';
 import { AngularFireDatabase, AngularFireList  } from 'angularfire2/database';
+import {Restaurante } from '../../model/restaurante';
 
 /**
  * Generated class for the MenuPage page.
@@ -19,7 +21,7 @@ import { AngularFireDatabase, AngularFireList  } from 'angularfire2/database';
 })
 export class MenuPage {
 
-  itemList: any;
+  itemList: Item[];
   myItem : Item = {
     key: '',
     categoria: '',
@@ -29,29 +31,20 @@ export class MenuPage {
     idRestaurante: '',
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService) {
+  miRestaurante: Restaurante;
 
-    /*this.itemList = this.menuServ.getMenuList()
-      .snapshotChanges()
-      .map(
-      changes => {
-        return changes.map(c => ({
-          key: c.payload.key, ...c.payload.val()
-        }))
-      });*/
+  constructor(public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService,
+    public restauranteService: RestauranteService) {
 
-      this.itemList = menuService.getItemList();
+      restauranteService.getRestaurante().subscribe(value => {
+        console.log(value.fotoRestaurante);
+        this.miRestaurante = value;
+      })
 
-      /*this.myItem.key = '6';
-      this.myItem.categoria = 'Lol';
-      this.myItem.descripcion = 'Lol';
-      this.myItem.idRestaurante = 'Lol';
-      this.myItem.precio = '69';
-      this.myItem.titulo = 'Lol';*/
-
-      //console.log(this.myItem);
-      //menuServ.removeNote(this.myItem);
-
+      menuService.getItemList().subscribe(values => {
+        this.itemList = values;
+        //this.itemList.forEach(item => console.log(item.titulo));
+      })
      }
 
   ionViewDidLoad() {
