@@ -17,10 +17,10 @@
 
     <ion-img class="imgRest" src='{{miRestaurante?.fotoRestaurante}}'></ion-img>
 
-    <platos-list [titulo]="entranteTitulo" [lista]="entranteList"></platos-list>
-    <platos-list [titulo]="primeroTitulo" [lista]="primeroList"></platos-list>
-    <platos-list [titulo]="segundoTitulo" [lista]="segundoList"></platos-list>
-    <platos-list [titulo]="postreTitulo" [lista]="postreList"></platos-list>
-    <platos-list [titulo]="bebidaTitulo" [lista]="bebidaList"></platos-list>
+    <platos-list [titulo]="entranteTitulo" [lista]="entranteList" *ngIf="entranteList?.length > 0"></platos-list>
+    <platos-list [titulo]="primeroTitulo" [lista]="primeroList" *ngIf="primeroList?.length > 0"></platos-list>
+    <platos-list [titulo]="segundoTitulo" [lista]="segundoList" *ngIf="segundoList?.length > 0"></platos-list>
+    <platos-list [titulo]="postreTitulo" [lista]="postreList" *ngIf="postreList?.length > 0"></platos-list>
+    <platos-list [titulo]="bebidaTitulo" [lista]="bebidaList" *ngIf="bebidaList?.length > 0"></platos-list>
 
 </ion-content>
