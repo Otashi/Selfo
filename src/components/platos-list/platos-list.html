@@ -1,0 +1,15 @@
+<h3>{{titulo}}</h3>
+  <ion-list>
+  <div *ngFor="let elemento of lista">
+    <ion-item text-wrap>
+      <ion-thumbnail item-left>
+        <img src="{{elemento?.urlImage}}">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ elemento?.titulo }}</h2>
+        <p>{{ elemento?.descripcion }}</p>
+        <p class="precio">{{elemento?.precio}} €</p>
+      </ion-label>
+    </ion-item>
+  </div>
+  </ion-list>

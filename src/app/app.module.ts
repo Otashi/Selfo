@@ -19,6 +19,7 @@ import { AuthService } from '../services/auth.service';
 import { MenuPage } from '../pages/menu/menu';
 import { MenuService } from '../services/menu.service';
 import { RestauranteService } from '../services/restaurante.service';
+import { ComponentsModule } from '../components/components.module';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { RestauranteService } from '../services/restaurante.service';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
+    ComponentsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

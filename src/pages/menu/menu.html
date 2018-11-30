@@ -14,19 +14,13 @@
 
 
 <ion-content padding>
-  <ion-item>
-    <img src='{{miRestaurante?.fotoRestaurante}}'>
-  </ion-item>
-  <ion-list>
-    <ion-item text-wrap *ngFor="let item of itemList">
-      <ion-thumbnail item-left>
-        <img src="{{item.urlImage}}">
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ item.titulo }}</h2>
-        <p>{{ item.descripcion }}</p>
-        <p class="precio">{{item.precio}} €</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+
+    <ion-img class="imgRest" src='{{miRestaurante?.fotoRestaurante}}'></ion-img>
+
+    <platos-list [titulo]="entranteTitulo" [lista]="entranteList"></platos-list>
+    <platos-list [titulo]="primeroTitulo" [lista]="primeroList"></platos-list>
+    <platos-list [titulo]="segundoTitulo" [lista]="segundoList"></platos-list>
+    <platos-list [titulo]="postreTitulo" [lista]="postreList"></platos-list>
+    <platos-list [titulo]="bebidaTitulo" [lista]="bebidaList"></platos-list>
+
 </ion-content>
