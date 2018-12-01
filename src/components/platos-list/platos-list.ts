@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Item, Categoria } from '../../model/item';
+import { ModalController } from 'ionic-angular';
 
 /**
  * Generated class for the PlatosListComponent component.
@@ -15,9 +16,11 @@ export class PlatosListComponent {
   @Input() lista: Item[];
   @Input() titulo: string;
 
-  constructor() {
-    console.log('Hello PlatosListComponent Component');
-    console.log(this.lista);
+  constructor(private modal: ModalController) {
   }
 
+  openModal(myData:Item){
+    const myModal = this.modal.create('DetalleitemPage', {item: myData});
+    myModal.present();
+  }
 }

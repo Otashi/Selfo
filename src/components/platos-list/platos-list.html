@@ -1,7 +1,7 @@
 <h3>{{titulo}}</h3>
   <ion-list>
   <div *ngFor="let elemento of lista">
-    <ion-item text-wrap>
+    <ion-item text-wrap (click) = "openModal(elemento)">
       <ion-thumbnail item-left>
         <img src="{{elemento?.urlImage}}">
       </ion-thumbnail>

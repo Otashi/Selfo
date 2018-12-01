@@ -1,0 +1,26 @@
+<!--
+  Generated template for the DetalleitemPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Selfo - Detalle</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="cerrarModal()">Cerrar</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h3>{{myItem?.titulo}}</h3>
+  <ion-img src='{{myItem?.urlImage}}'></ion-img>
+  <p class="precio">{{myItem?.precio}} €</p>
+  <p>{{myItem?.descripcion}}</p>
+  
+</ion-content>
+

@@ -1,0 +1,14 @@
+page-detalleitem {
+
+    ion-img{
+        contain: none !important;
+    }
+    h3{
+        text-align: center;
+    }
+    .precio{
+        text-align: right;
+        color: blue;
+        font-size: 25px;
+    }
+}

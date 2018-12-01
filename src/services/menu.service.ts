@@ -7,15 +7,13 @@ import { Observable } from 'rxjs-compat';
 export class MenuService {
 
   private itemList: Observable<Item[]>;
-  idRestaurante: number = 1;
 
   constructor(private db: AngularFireDatabase) {
-    this.itemList = db.list<Item>('/items', ref => ref.orderByChild('idRestaurante').equalTo(this.idRestaurante)).valueChanges();
-    console.log(this.itemList);
+  
   }
 
-  getItemList() {
-    return this.itemList;
+  getItemList(idRestaurante: number) {
+    return this.itemList = this.db.list<Item>('/items', ref => ref.orderByChild('idRestaurante').equalTo(idRestaurante)).valueChanges();
     /*this.db.list('/items').valueChanges().subscribe((datas) => {
       console.log("datas", datas)
       this.itemList = datas;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { Item, Categoria } from '../../model/item';
 import { MenuService } from '../../services/menu.service'
 import { RestauranteService } from '../../services/restaurante.service'
@@ -26,7 +26,7 @@ export class MenuPage {
   segundoList: Item[];
   postreList: Item[];
   bebidaList: Item[];
-  entranteTitulo: string;
+  entranteTitulo: string = "Entrantes";
   primeroTitulo: string = "Primeros";
   segundoTitulo: string = "Segundos";
   postreTitulo: string = "Postres";
@@ -35,9 +35,7 @@ export class MenuPage {
   public miRestaurante: Restaurante;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService,
-    public restauranteService: RestauranteService) {
-
-      this.entranteTitulo = "Entrantes";
+    public restauranteService: RestauranteService, private modalController: ModalController) {
 
       restauranteService.getRestaurante().subscribe(value => {
         console.log(value.fotoRestaurante);
@@ -45,7 +43,7 @@ export class MenuPage {
         console.log(this.miRestaurante);
       });
 
-      menuService.getItemList().subscribe(values => {
+      menuService.getItemList(0).subscribe(values => {
         this.itemList = values;
         this.entranteList = this.itemList.filter(value => value.categoria === 0);
         this.primeroList = this.itemList.filter(value => value.categoria === 1);
