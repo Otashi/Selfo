@@ -36,18 +36,19 @@ export class HomePage {
   }
 
   scanQR(){
-    /*this.qrScanner.prepare()
+    this.qrScanner.prepare()
   .then((status: QRScannerStatus) => {
      if (status.authorized) {
        // camera permission was granted
-
-
        // start scanning
-       let scanSub = this.qrScanner.scan().subscribe((text: string) => {
-         console.log('Scanned something', text);
+       let scanSub = this.qrScanner.scan().subscribe((text: any) => {
+         console.log('Scanned something', text.result);
 
          this.qrScanner.hide(); // hide camera preview
          scanSub.unsubscribe(); // stop scanning
+         this.navCtrl.push('MenuPage', {
+          idRestaurante: parseInt(text.result)
+         });
        });
 
      } else if (status.denied) {
@@ -58,8 +59,7 @@ export class HomePage {
        // permission was denied, but not permanently. You can ask for permission again at a later time.
      }
   })
-  .catch((e: any) => console.log('Error is', e));*/
-
+  .catch((e: any) => console.log('Error is', e));
   }
 
 }

@@ -7,14 +7,14 @@ import { Restaurante } from '../model/restaurante';
 export class RestauranteService {
 
   private rest: Observable<Restaurante>;
-  idRestaurante: string = '0';
 
   constructor(private db: AngularFireDatabase) {
-    this.rest = db.object<Restaurante>('/restaurantes/'+ this.idRestaurante).valueChanges();
     console.log(this.rest);
   }
 
-  getRestaurante() {
+  getRestaurante(idRestaurante: number) {
+    this.rest = this.db.object<Restaurante>('/restaurantes/'+ idRestaurante).valueChanges();
+    
     return this.rest;
     /*this.db.list('/items').valueChanges().subscribe((datas) => {
       console.log("datas", datas)

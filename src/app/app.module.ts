@@ -23,7 +23,8 @@ import { RestauranteService } from '../services/restaurante.service';
 import { ComponentsModule } from '../components/components.module';
 import { QRScanner } from '@ionic-native/qr-scanner';
 import { UserService } from '../services/user.sercive';
-import { User } from '../model/user';
+import { ImageService } from '../services/image.service';
+import { Camera } from '@ionic-native/camera';
 
 
 @NgModule({
@@ -31,8 +32,6 @@ import { User } from '../model/user';
     MyApp,
     ListPage,
     LoginPage,
-    MenuPage,
-    HomePage,
     PerfilPage,
   ],
   imports: [
@@ -47,8 +46,6 @@ import { User } from '../model/user';
     MyApp,
     ListPage,
     LoginPage,
-    MenuPage,
-    HomePage,
     PerfilPage,
   ],
   providers: [
@@ -61,6 +58,8 @@ import { User } from '../model/user';
     RestauranteService,
     QRScanner,
     UserService,
+    ImageService,
+    Camera,
   ]
 })
 export class AppModule {}

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, MenuController } from 'ionic-angular';
 
 import { AuthService } from '../../services/auth.service';
 
@@ -24,12 +24,13 @@ export class LoginPage {
   myPassword: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthService, 
-    public alertCtrl: AlertController){
+    public alertCtrl: AlertController, private menuCtrl: MenuController){
       
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+    this.menuCtrl.enable(false);
   }
 
   doRegister(){

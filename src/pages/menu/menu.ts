@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, MenuController } from 'ionic-angular';
 import { Item, Categoria } from '../../model/item';
 import { MenuService } from '../../services/menu.service'
 import { RestauranteService } from '../../services/restaurante.service'
@@ -32,29 +32,38 @@ export class MenuPage {
   postreTitulo: string = "Postres";
   bebidaTitulo: string = "Bebidas";
 
-  public miRestaurante: Restaurante;
+  miRestaurante: Restaurante;
+  idRestaurante: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService,
-    public restauranteService: RestauranteService, private modalController: ModalController) {
-
-      restauranteService.getRestaurante().subscribe(value => {
-        this.miRestaurante = value;
-        console.log(this.miRestaurante);
-      });
-
-      menuService.getItemList(0).subscribe(values => {
-        this.itemList = values;
-        this.entranteList = this.itemList.filter(value => value.categoria === 0);
-        this.primeroList = this.itemList.filter(value => value.categoria === 1);
-        this.segundoList = this.itemList.filter(value => value.categoria === 2);
-        this.postreList = this.itemList.filter(value => value.categoria === 3);
-        this.bebidaList = this.itemList.filter(value => value.categoria === 4);
-
-      });
+    public restauranteService: RestauranteService, private modalController: ModalController, private menuCtrl: MenuController) {
+      
      }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MenuPage');
+
+    this.idRestaurante = this.navParams.get('idRestaurante');
+    //console.log(this.idRestaurante);
+
+    this.restauranteService.getRestaurante(this.idRestaurante).subscribe(value => {
+      this.miRestaurante = value;
+      //console.log(this.miRestaurante);
+    });
+
+    this.menuService.getItemList(this.idRestaurante).subscribe(values => {
+      this.itemList = values;
+      this.entranteList = this.itemList.filter(value => value.categoria === 0);
+      this.primeroList = this.itemList.filter(value => value.categoria === 1);
+      this.segundoList = this.itemList.filter(value => value.categoria === 2);
+      this.postreList = this.itemList.filter(value => value.categoria === 3);
+      this.bebidaList = this.itemList.filter(value => value.categoria === 4);
+    });
+    
+  }
+
+  ionViewWillEnter() {
+    
   }
 
 }
