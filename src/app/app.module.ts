@@ -10,6 +10,7 @@ import { ListPage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
+import { PerfilPage } from '../pages/perfil/perfil';
 
 import { AngularFireModule } from 'angularfire2';
 import { firebaseConfig } from './firebase.credentials';
@@ -20,6 +21,7 @@ import { MenuPage } from '../pages/menu/menu';
 import { MenuService } from '../services/menu.service';
 import { RestauranteService } from '../services/restaurante.service';
 import { ComponentsModule } from '../components/components.module';
+import { QRScanner } from '@ionic-native/qr-scanner';
 
 
 @NgModule({
@@ -28,6 +30,8 @@ import { ComponentsModule } from '../components/components.module';
     ListPage,
     LoginPage,
     MenuPage,
+    HomePage,
+    PerfilPage,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +46,8 @@ import { ComponentsModule } from '../components/components.module';
     ListPage,
     LoginPage,
     MenuPage,
+    HomePage,
+    PerfilPage,
   ],
   providers: [
     StatusBar,
@@ -50,7 +56,8 @@ import { ComponentsModule } from '../components/components.module';
     AngularFireAuth,
     AuthService,
     MenuService,
-    RestauranteService
+    RestauranteService,
+    QRScanner,
   ]
 })
 export class AppModule {}

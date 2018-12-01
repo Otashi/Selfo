@@ -24,7 +24,7 @@ export class HomePage {
     private qrScanner: QRScanner) {
     if(!this.auth.authenticated){
       console.log("Not logged");
-      this.navCtrl.setRoot(LoginPage);
+      //this.navCtrl.setRoot(LoginPage);
     }
     else {
       console.log(this.auth.authenticated);
