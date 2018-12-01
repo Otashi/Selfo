@@ -22,6 +22,8 @@ import { MenuService } from '../services/menu.service';
 import { RestauranteService } from '../services/restaurante.service';
 import { ComponentsModule } from '../components/components.module';
 import { QRScanner } from '@ionic-native/qr-scanner';
+import { UserService } from '../services/user.sercive';
+import { User } from '../model/user';
 
 
 @NgModule({
@@ -58,6 +60,7 @@ import { QRScanner } from '@ionic-native/qr-scanner';
     MenuService,
     RestauranteService,
     QRScanner,
+    UserService,
   ]
 })
 export class AppModule {}

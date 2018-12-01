@@ -7,7 +7,14 @@ import AuthProvider = firebase.auth.AuthProvider;
 export class AuthService {
 	private user: firebase.User;
 
+	myCredentials = {
+        email: 'luishong.wu@gmail.com',
+        password: 'lolazo123'
+      };
+
 	constructor(public afAuth: AngularFireAuth) {
+
+		this.signInWithEmail(this.myCredentials);
 		afAuth.authState.subscribe(user => {
 			this.user = user;
 		});
@@ -39,6 +46,10 @@ export class AuthService {
 		return this.afAuth.auth.sendPasswordResetEmail(email)
 			.then(() => console.log("email sent"))
 			.catch((error) => console.log(error))
+	}
+
+	getUid(){
+		return this.user.uid;
 	}
 
 }

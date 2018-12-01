@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.sercive';
+import { User } from '../../model/user';
 
 /**
  * Generated class for the PerfilPage page.
@@ -15,7 +18,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PerfilPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  userUid: string;
+  myUser: User;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private authService: AuthService,
+    private userService: UserService) {
+
+    this.userUid = this.authService.getUid();
+    if(this.userUid != null){
+      this.userService.getUser(this.userUid).subscribe( 
+        value => {
+          this.myUser = value;
+          console.log(this.myUser);
+        })
+        err => {console.log(err)};
+    }
   }
 
   ionViewDidLoad() {

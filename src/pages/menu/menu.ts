@@ -38,7 +38,6 @@ export class MenuPage {
     public restauranteService: RestauranteService, private modalController: ModalController) {
 
       restauranteService.getRestaurante().subscribe(value => {
-        console.log(value.fotoRestaurante);
         this.miRestaurante = value;
         console.log(this.miRestaurante);
       });
