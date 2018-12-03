@@ -2,11 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase  } from 'angularfire2/database';
 import { Observable } from 'rxjs-compat';
 import { Pedido, Estado } from '../model/pedido';
-import { UserService } from '../services/user.sercive';
-import { RestauranteService } from '../services/restaurante.service';
-import { DatePipe } from '@angular/common';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { isDifferent } from '@angular/core/src/render3/util';
 
 @Injectable()
 export class PedidoService {
@@ -16,7 +11,8 @@ export class PedidoService {
 
   createPedido(pedido: Pedido) {
 
-    this.db.object('/pedidos').update(pedido);
+    const key = this.db.createPushId();
+    this.db.object('/pedidos/' + key).update(pedido);
     /*this.db.list('/items').valueChanges().subscribe((datas) => {
       console.log("datas", datas)
       this.itemList = datas;
@@ -24,6 +20,11 @@ export class PedidoService {
         console.log("probleme : ", err)
     });*/
 
+  }
+
+  checkPedidoBorrador(userid:string, estado: number) : boolean{
+    const pedidoBorrador = this.db.list<Pedido>('/pedidos', ref => ref.orderByChild('idUsuario').equalTo(userid)).valueChanges();
+    return true;
   }
     /*
     addNote(note: Item) {

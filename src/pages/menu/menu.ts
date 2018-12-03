@@ -50,6 +50,7 @@ export class MenuPage {
     this.idRestaurante = '0'; //Borrar
     //Recoge el valor escaneado
     //this.idRestaurante = this.navParams.get('idRestaurante');
+    //this.mesa = this.navParams.get('mesa'); //Cuando se tenga la mesa en el QR
     //console.log(this.idRestaurante);
 
     this.restauranteService.getRestauranteById(this.idRestaurante).subscribe(value => {
@@ -64,18 +65,22 @@ export class MenuPage {
       this.postreList = this.itemList.filter(value => value.categoria === 3);
       this.bebidaList = this.itemList.filter(value => value.categoria === 4);
     });
-
-    var date = new Date();
-    this.myPedido.fecha = date.toLocaleDateString();
-    console.log(this.myPedido.fecha);
-    this.myPedido.estado = Estado.Borrador;
-    this.myPedido.idRestaurante = this.idRestaurante;
-    this.myPedido.idUser = "lol";//this.afaService.auth.currentUser.uid;
-    this.myPedido.mesa = "99";
-    this.pedidoService.createPedido(this.myPedido);
+    //this.createPedido();
   }
 
   ionViewWillEnter() {
+
+  }
+
+  createPedido(){
+
+    var date = new Date();
+    this.myPedido.fecha = date.toLocaleDateString();
+    this.myPedido.estado = Estado.Borrador;
+    this.myPedido.idRestaurante = this.idRestaurante;
+    this.myPedido.idUsuario = "lol";//this.afaService.auth.currentUser.uid;
+    this.myPedido.mesa = "99";
+    this.pedidoService.createPedido(this.myPedido);
 
   }
 

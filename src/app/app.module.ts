@@ -22,7 +22,7 @@ import { MenuService } from '../services/menu.service';
 import { RestauranteService } from '../services/restaurante.service';
 import { ComponentsModule } from '../components/components.module';
 import { QRScanner } from '@ionic-native/qr-scanner';
-import { UserService } from '../services/user.sercive';
+import { UserService } from '../services/user.service';
 import { ImageService } from '../services/image.service';
 import { Camera } from '@ionic-native/camera';
 import { PedidoService } from '../services/pedido.service';
@@ -35,6 +35,7 @@ import { PedidoService } from '../services/pedido.service';
     LoginPage,
     PerfilPage,
     MenuPage,
+    HomePage,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +51,7 @@ import { PedidoService } from '../services/pedido.service';
     LoginPage,
     PerfilPage,
     MenuPage,
+    HomePage,
   ],
   providers: [
     StatusBar,

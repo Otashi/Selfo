@@ -49,6 +49,7 @@ export class HomePage {
          this.navCtrl.push('MenuPage', {
           idRestaurante: text.result
          });
+         
        });
 
      } else if (status.denied) {

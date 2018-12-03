@@ -14,5 +14,8 @@ page-home {
     .col{
         text-align: center; 
     }
+    ion-content,body, .app-root, ion-app,.scroll-content,.fixed-content,page-app {
+        background: none transparent !important;
+    }
 }
     
