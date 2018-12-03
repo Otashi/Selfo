@@ -16,9 +16,6 @@ export class PedidoService {
 
   createPedido(pedido: Pedido) {
 
-    var date = new Date();
-    console.log(date.toLocaleDateString());
-
     this.db.object('/pedidos').update(pedido);
     /*this.db.list('/items').valueChanges().subscribe((datas) => {
       console.log("datas", datas)
