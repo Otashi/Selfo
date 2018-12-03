@@ -1,6 +1,6 @@
 export class Restaurante {
 
-  key: string
+  key: string;
   direccion: string;
   fotoRestaurante: string;
   nombre: string;

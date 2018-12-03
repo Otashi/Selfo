@@ -1,17 +1,27 @@
-export class Restaurante {
+export class Pedido {
 
     key: string
     idUser: string;
     idRestaurante: string;
-    nombre: string;
-    telefono: string;
-  
-    constructor (key: string, direccion: string, fotoRestaurante: string, nombre: string, telefono: string){
-        this.key = key;
-        //this.direccion = direccion;
-       // this.fotoRestaurante = fotoRestaurante;
-        this.nombre = nombre;
-        this.telefono = telefono;
+    mesa: string;
+    fecha: string;
+    estado: number;
+
+    constructor (){
+
     }
+
+    /*constructor (key: string, idUser: string, idRestaurante: string, mesa: string, estado: number){
+        this.key = key;
+        this.idUser = idUser;
+        this.idRestaurante = idRestaurante;
+        this.mesa = mesa;
+        this.estado = estado;
+    }*/
   }
-  
+
+  export enum Estado {
+    Borrador = 0,
+    EnProceso = 1,
+    Finalizado = 2,
+  }

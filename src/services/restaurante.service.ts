@@ -12,9 +12,8 @@ export class RestauranteService {
     console.log(this.rest);
   }
 
-  getRestaurante(idRestaurante: number) {
+  getRestauranteById(idRestaurante: string) {
     this.rest = this.db.object<Restaurante>('/restaurantes/'+ idRestaurante).valueChanges();
-    
     return this.rest;
     /*this.db.list('/items').valueChanges().subscribe((datas) => {
       console.log("datas", datas)
@@ -23,6 +22,10 @@ export class RestauranteService {
         console.log("probleme : ", err)
     });*/
 
+  }
+
+  getRestaurante(){
+    return this.rest;
   }
     /*
     addNote(note: Item) {

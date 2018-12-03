@@ -1,6 +1,6 @@
 export class Item {
 
-  key: string
+  key: string;
   titulo: string;
   descripcion: string;
   idRestaurante: string;

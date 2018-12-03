@@ -9,10 +9,10 @@ export class MenuService {
   private itemList: Observable<Item[]>;
 
   constructor(private db: AngularFireDatabase) {
-  
+
   }
 
-  getItemList(idRestaurante: number) {
+  getItemList(idRestaurante: string) {
     return this.itemList = this.db.list<Item>('/items', ref => ref.orderByChild('idRestaurante').equalTo(idRestaurante)).valueChanges();
     /*this.db.list('/items').valueChanges().subscribe((datas) => {
       console.log("datas", datas)

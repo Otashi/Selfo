@@ -26,7 +26,7 @@ export class PerfilPage {
 
     this.userUid = this.authService.getUid();
     if(this.userUid != null){
-      this.userService.getUser(this.userUid).subscribe( 
+      this.userService.getUserById(this.userUid).subscribe(
         value => {
           this.myUser = value;
           console.log(this.myUser);

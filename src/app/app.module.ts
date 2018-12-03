@@ -25,6 +25,7 @@ import { QRScanner } from '@ionic-native/qr-scanner';
 import { UserService } from '../services/user.sercive';
 import { ImageService } from '../services/image.service';
 import { Camera } from '@ionic-native/camera';
+import { PedidoService } from '../services/pedido.service';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { Camera } from '@ionic-native/camera';
     ListPage,
     LoginPage,
     PerfilPage,
+    MenuPage,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +49,7 @@ import { Camera } from '@ionic-native/camera';
     ListPage,
     LoginPage,
     PerfilPage,
+    MenuPage,
   ],
   providers: [
     StatusBar,
@@ -60,6 +63,7 @@ import { Camera } from '@ionic-native/camera';
     UserService,
     ImageService,
     Camera,
+    PedidoService,
   ]
 })
 export class AppModule {}

@@ -47,7 +47,7 @@ export class HomePage {
          this.qrScanner.hide(); // hide camera preview
          scanSub.unsubscribe(); // stop scanning
          this.navCtrl.push('MenuPage', {
-          idRestaurante: parseInt(text.result)
+          idRestaurante: text.result
          });
        });
 

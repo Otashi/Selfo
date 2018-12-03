@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList  } from 'angularfire2/database';
+import { AngularFireDatabase  } from 'angularfire2/database';
 import { Observable } from 'rxjs-compat';
-import { User } from '../model/user';
+import { Pedido, Estado } from '../model/pedido';
+import { UserService } from '../services/user.sercive';
+import { RestauranteService } from '../services/restaurante.service';
+import { DatePipe } from '@angular/common';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { isDifferent } from '@angular/core/src/render3/util';
 
 @Injectable()
-export class UserService {
-
-  private user: Observable<User>;
+export class PedidoService {
 
   constructor(private db: AngularFireDatabase) {
-
   }
 
-  getUser(){
-    return this.user;
-  }
+  createPedido(pedido: Pedido) {
 
-  getUserById(userUid : string) {
-    return this.user = this.db.object<User>('/users/' + userUid).valueChanges();
+    var date = new Date();
+    console.log(date.toLocaleDateString());
+
+    this.db.object('/pedidos').update(pedido);
     /*this.db.list('/items').valueChanges().subscribe((datas) => {
       console.log("datas", datas)
       this.itemList = datas;

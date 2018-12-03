@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, MenuController } from 'ionic-angular';
-import { Item, Categoria } from '../../model/item';
+import { Item } from '../../model/item';
 import { MenuService } from '../../services/menu.service'
 import { RestauranteService } from '../../services/restaurante.service'
-import { Observable } from 'rxjs-compat';
-import { AngularFireDatabase, AngularFireList  } from 'angularfire2/database';
 import {Restaurante } from '../../model/restaurante';
+import { PedidoService } from '../../services/pedido.service';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Pedido, Estado } from '../../model/pedido';
 
 /**
  * Generated class for the MenuPage page.
@@ -33,22 +34,26 @@ export class MenuPage {
   bebidaTitulo: string = "Bebidas";
 
   miRestaurante: Restaurante;
-  idRestaurante: number;
+  idRestaurante: string;
+  myPedido: Pedido;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService,
-    public restauranteService: RestauranteService, private modalController: ModalController, private menuCtrl: MenuController) {
-      
+    public restauranteService: RestauranteService, private modalController: ModalController, private menuCtrl: MenuController,
+    private pedidoService: PedidoService, private afaService: AngularFireAuth) {
+
+      this.myPedido = new Pedido();
      }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MenuPage');
 
-    this.idRestaurante = this.navParams.get('idRestaurante');
+    this.idRestaurante = '0'; //Borrar
+    //Recoge el valor escaneado
+    //this.idRestaurante = this.navParams.get('idRestaurante');
     //console.log(this.idRestaurante);
 
-    this.restauranteService.getRestaurante(this.idRestaurante).subscribe(value => {
+    this.restauranteService.getRestauranteById(this.idRestaurante).subscribe(value => {
       this.miRestaurante = value;
-      //console.log(this.miRestaurante);
     });
 
     this.menuService.getItemList(this.idRestaurante).subscribe(values => {
@@ -59,11 +64,19 @@ export class MenuPage {
       this.postreList = this.itemList.filter(value => value.categoria === 3);
       this.bebidaList = this.itemList.filter(value => value.categoria === 4);
     });
-    
+
+    var date = new Date();
+    this.myPedido.fecha = date.toLocaleDateString();
+    console.log(this.myPedido.fecha);
+    this.myPedido.estado = Estado.Borrador;
+    this.myPedido.idRestaurante = this.idRestaurante;
+    this.myPedido.idUser = "lol";//this.afaService.auth.currentUser.uid;
+    this.myPedido.mesa = "99";
+    this.pedidoService.createPedido(this.myPedido);
   }
 
   ionViewWillEnter() {
-    
+
   }
 
 }
