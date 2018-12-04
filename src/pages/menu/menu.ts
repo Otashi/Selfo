@@ -7,6 +7,7 @@ import {Restaurante } from '../../model/restaurante';
 import { PedidoService } from '../../services/pedido.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Pedido, Estado } from '../../model/pedido';
+import 'rxjs/add/operator/map';
 
 /**
  * Generated class for the MenuPage page.
@@ -36,6 +37,7 @@ export class MenuPage {
   miRestaurante: Restaurante;
   idRestaurante: string;
   myPedido: Pedido;
+  pedidoBorrador: Pedido;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService,
     public restauranteService: RestauranteService, private modalController: ModalController, private menuCtrl: MenuController,
@@ -65,7 +67,11 @@ export class MenuPage {
       this.postreList = this.itemList.filter(value => value.categoria === 3);
       this.bebidaList = this.itemList.filter(value => value.categoria === 4);
     });
-    //this.createPedido();
+
+  }
+
+  ionViewWillLoad(){
+    this.checkPedidoEnBorrador();
   }
 
   ionViewWillEnter() {
@@ -80,8 +86,37 @@ export class MenuPage {
     this.myPedido.idRestaurante = this.idRestaurante;
     this.myPedido.idUsuario = "lol";//this.afaService.auth.currentUser.uid;
     this.myPedido.mesa = "99";
+    this.myPedido.total = '0';
     this.pedidoService.createPedido(this.myPedido);
 
   }
 
+  checkPedidoEnBorrador(){
+    this.pedidoService.getPedidosUsuario('lol').subscribe(val => {
+      val.forEach(pedido => {
+        if(pedido.estado == Estado.Borrador){
+          this.pedidoBorrador = pedido;
+          this.pedidoBorrador.key = pedido.$key;
+        }
+      })
+
+      if(this.pedidoBorrador){
+        this.getItemsPedido(this.pedidoBorrador.key);
+      }
+      else{
+        console.log("NOOOOOOOOOOOOOOOOOOOO");
+        //this.createPedido();
+      }
+
+    });
+  }
+
+  getItemsPedido(idPedido: string){
+    this.pedidoService.getItemsPedido(idPedido).subscribe(values =>{
+      values.forEach(c =>{
+
+      })
+      console.log(values);
+    })
+  }
 }

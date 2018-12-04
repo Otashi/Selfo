@@ -2,9 +2,13 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase  } from 'angularfire2/database';
 import { Observable } from 'rxjs-compat';
 import { Pedido, Estado } from '../model/pedido';
+import * as firebase from 'firebase/app';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class PedidoService {
+
+  pedidosRef = firebase.database().ref("pedidos");
 
   constructor(private db: AngularFireDatabase) {
   }
@@ -22,9 +26,18 @@ export class PedidoService {
 
   }
 
-  checkPedidoBorrador(userid:string, estado: number) : boolean{
-    const pedidoBorrador = this.db.list<Pedido>('/pedidos', ref => ref.orderByChild('idUsuario').equalTo(userid)).valueChanges();
-    return true;
+  getPedidosUsuario(userid:string){
+    return this.db.list<Pedido>('/pedidos', ref => ref.orderByChild('idUsuario').equalTo(userid)).snapshotChanges()
+    .map(val => {
+          return val.map(c => ({$key: c.payload.key, ...c.payload.val()}));
+        }
+    );
+  }
+
+  getItemsPedido(idPedido: string){
+    return this.db.object('/pedidoitem/' + idPedido).valueChanges();
+    /*.map(c => { ({$key: c.payload.key, ...c.payload.val()});
+    });*/
   }
     /*
     addNote(note: Item) {

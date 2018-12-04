@@ -6,6 +6,7 @@ export class Pedido {
     mesa: string;
     fecha: string;
     estado: number;
+    total: string;
 
     constructor (){
 

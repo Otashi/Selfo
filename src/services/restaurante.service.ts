@@ -9,7 +9,6 @@ export class RestauranteService {
   private rest: Observable<Restaurante>;
 
   constructor(private db: AngularFireDatabase) {
-    console.log(this.rest);
   }
 
   getRestauranteById(idRestaurante: string) {
