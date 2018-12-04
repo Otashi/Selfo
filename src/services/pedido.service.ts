@@ -35,9 +35,10 @@ export class PedidoService {
   }
 
   getItemsPedido(idPedido: string){
-    return this.db.object('/pedidoitem/' + idPedido).valueChanges();
-    /*.map(c => { ({$key: c.payload.key, ...c.payload.val()});
-    });*/
+    return this.db.list('/pedidoitem/' + idPedido).snapshotChanges()
+    .map(val => {
+      return val.map( c => ({$key: c.payload.key, ...c.payload.val()}));
+    });
   }
     /*
     addNote(note: Item) {

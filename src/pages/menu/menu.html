@@ -11,6 +11,11 @@
         <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>{{miRestaurante?.nombre}}</ion-title>
+    <ion-buttons end>
+      <button ion-button large (click)="openModalDetallePedido()">
+        <ion-icon name="md-restaurant"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 

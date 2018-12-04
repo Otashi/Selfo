@@ -9,6 +9,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Pedido, Estado } from '../../model/pedido';
 import 'rxjs/add/operator/map';
 
+
 /**
  * Generated class for the MenuPage page.
  *
@@ -33,6 +34,8 @@ export class MenuPage {
   segundoTitulo: string = "Segundos";
   postreTitulo: string = "Postres";
   bebidaTitulo: string = "Bebidas";
+  //myItemsPedido: {idItem: string, cantidad: number}[];
+  myItemsPedido: any;
 
   miRestaurante: Restaurante;
   idRestaurante: string;
@@ -49,7 +52,7 @@ export class MenuPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad MenuPage');
 
-    this.idRestaurante = '0'; //Borrar
+    this.idRestaurante = 'R0000'; //Borrar
     //Recoge el valor escaneado
     //this.idRestaurante = this.navParams.get('idRestaurante');
     //this.mesa = this.navParams.get('mesa'); //Cuando se tenga la mesa en el QR
@@ -113,10 +116,20 @@ export class MenuPage {
 
   getItemsPedido(idPedido: string){
     this.pedidoService.getItemsPedido(idPedido).subscribe(values =>{
-      values.forEach(c =>{
-
-      })
-      console.log(values);
+      //console.log(values); 
+      /*var cont = 0;
+      values.forEach(plato => {
+        this.myItemsPedido[cont].idItem = plato.$key;
+        this.myItemsPedido[cont].cantidad = plato.cantidad;
+        cont++;
+      })*/
+      this.myItemsPedido = values;
+      console.log(this.myItemsPedido);
     })
+  }
+
+  openModalDetallePedido(){
+    const myModal = this.modalController.create('DetallepedidoPage', {platos: this.myItemsPedido});
+    myModal.present();
   }
 }
