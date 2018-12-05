@@ -26,6 +26,7 @@ import { UserService } from '../services/user.service';
 import { ImageService } from '../services/image.service';
 import { Camera } from '@ionic-native/camera';
 import { PedidoService } from '../services/pedido.service';
+import { PedidoactualService } from '../services/pedidoactual.service';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { PedidoService } from '../services/pedido.service';
     ImageService,
     Camera,
     PedidoService,
+    PedidoactualService,
   ]
 })
 export class AppModule {}

@@ -5,9 +5,11 @@ import { MenuService } from '../../services/menu.service'
 import { RestauranteService } from '../../services/restaurante.service'
 import {Restaurante } from '../../model/restaurante';
 import { PedidoService } from '../../services/pedido.service';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Pedido, Estado } from '../../model/pedido';
 import 'rxjs/add/operator/map';
+import { AuthService } from '../../services/auth.service';
+import { PedidoactualService } from '../../services/pedidoactual.service';
+import { ThrowStmt } from '@angular/compiler';
 
 
 /**
@@ -37,14 +39,14 @@ export class MenuPage {
   //myItemsPedido: {idItem: string, cantidad: number}[];
   myItemsPedido: any;
 
-  miRestaurante: Restaurante;
+  myRestaurante: Restaurante;
   idRestaurante: string;
   myPedido: Pedido;
   pedidoBorrador: Pedido;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService,
     public restauranteService: RestauranteService, private modalController: ModalController, private menuCtrl: MenuController,
-    private pedidoService: PedidoService, private afaService: AngularFireAuth) {
+    private pedidoService: PedidoService, private authService: AuthService, private pedidoactualService: PedidoactualService) {
 
       this.myPedido = new Pedido();
      }
@@ -59,7 +61,7 @@ export class MenuPage {
     //console.log(this.idRestaurante);
 
     this.restauranteService.getRestauranteById(this.idRestaurante).subscribe(value => {
-      this.miRestaurante = value;
+      this.myRestaurante = value;
     });
 
     this.menuService.getItemList(this.idRestaurante).subscribe(values => {
@@ -70,11 +72,11 @@ export class MenuPage {
       this.postreList = this.itemList.filter(value => value.categoria === 3);
       this.bebidaList = this.itemList.filter(value => value.categoria === 4);
     });
-
   }
 
   ionViewWillLoad(){
-    this.checkPedidoEnBorrador();
+    //this.pedidoactualService.checkPedidoSinAcabar();
+    console.log("primens");
   }
 
   ionViewWillEnter() {
@@ -87,49 +89,16 @@ export class MenuPage {
     this.myPedido.fecha = date.toLocaleDateString();
     this.myPedido.estado = Estado.Borrador;
     this.myPedido.idRestaurante = this.idRestaurante;
-    this.myPedido.idUsuario = "lol";//this.afaService.auth.currentUser.uid;
+    this.myPedido.idUsuario = 'vAnd1yz4a0gMBWEzy8oicnYstQN2'//this.authService.getUid();
     this.myPedido.mesa = "99";
     this.myPedido.total = '0';
     this.pedidoService.createPedido(this.myPedido);
 
   }
 
-  checkPedidoEnBorrador(){
-    this.pedidoService.getPedidosUsuario('lol').subscribe(val => {
-      val.forEach(pedido => {
-        if(pedido.estado == Estado.Borrador){
-          this.pedidoBorrador = pedido;
-          this.pedidoBorrador.key = pedido.$key;
-        }
-      })
-
-      if(this.pedidoBorrador){
-        this.getItemsPedido(this.pedidoBorrador.key);
-      }
-      else{
-        console.log("NOOOOOOOOOOOOOOOOOOOO");
-        //this.createPedido();
-      }
-
-    });
-  }
-
-  getItemsPedido(idPedido: string){
-    this.pedidoService.getItemsPedido(idPedido).subscribe(values =>{
-      //console.log(values); 
-      /*var cont = 0;
-      values.forEach(plato => {
-        this.myItemsPedido[cont].idItem = plato.$key;
-        this.myItemsPedido[cont].cantidad = plato.cantidad;
-        cont++;
-      })*/
-      this.myItemsPedido = values;
-      console.log(this.myItemsPedido);
-    })
-  }
-
   openModalDetallePedido(){
-    const myModal = this.modalController.create('DetallepedidoPage', {platos: this.myItemsPedido});
-    myModal.present();
+    console.log(this.pedidoactualService.myItemList);
+    /*const myModal = this.modalController.create('DetallepedidoPage', {platos: this.pedidoactualService.myItemList, restaurante: this.myRestaurante});
+    myModal.present();*/
   }
 }

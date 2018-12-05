@@ -21,8 +21,9 @@ export class Pedido {
     }*/
   }
 
-  export enum Estado {
-    Borrador = 0,
-    EnProceso = 1,
-    Finalizado = 2,
-  }
+export enum Estado {
+  Borrador = 0,
+  EnProceso = 1,
+  Finalizado = 2,
+}
+

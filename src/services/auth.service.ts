@@ -14,7 +14,7 @@ export class AuthService {
 
 	constructor(public afAuth: AngularFireAuth) {
 
-		this.signInWithEmail(this.myCredentials);
+    this.signInWithEmail(this.myCredentials);
 		afAuth.authState.subscribe(user => {
 			this.user = user;
 		});
@@ -25,11 +25,11 @@ export class AuthService {
 		return this.afAuth.auth.signInWithEmailAndPassword(credentials.email,
 			 credentials.password);
     }
-    
+
     signUp(credentials) {
         return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email, credentials.password);
 	}
-	
+
 	get authenticated() {
 		return this.user;
 	}
@@ -41,7 +41,7 @@ export class AuthService {
 	signOut(): Promise<void> {
 		return this.afAuth.auth.signOut();
 	}
-		
+
 	resetPassword(email: string) {
 		return this.afAuth.auth.sendPasswordResetEmail(email)
 			.then(() => console.log("email sent"))

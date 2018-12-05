@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{miRestaurante?.nombre}}</ion-title>
+    <ion-title>{{myRestaurante?.nombre}}</ion-title>
     <ion-buttons end>
       <button ion-button large (click)="openModalDetallePedido()">
         <ion-icon name="md-restaurant"></ion-icon>
@@ -22,7 +22,7 @@
 
 <ion-content padding>
 
-    <ion-img class="imgRest" src='{{miRestaurante?.fotoRestaurante}}'></ion-img>
+    <ion-img class="imgRest" src='{{myRestaurante?.fotoRestaurante}}'></ion-img>
 
     <platos-list [titulo]="entranteTitulo" [lista]="entranteList" *ngIf="entranteList?.length > 0"></platos-list>
     <platos-list [titulo]="primeroTitulo" [lista]="primeroList" *ngIf="primeroList?.length > 0"></platos-list>
