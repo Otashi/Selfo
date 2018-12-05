@@ -25,6 +25,7 @@ export class DetalleitemPage {
 
   ionViewWillLoad() {
     this.myItem = this.navParams.get('item');
+    //this.myItem.key = this.navParams.get('item').$key;
   }
 
   cerrarModal(){
@@ -42,7 +43,9 @@ export class DetalleitemPage {
   }
 
   anadirItemAPedido(){
-    this.pedidoactualService.addItemPedido(this.myItem.$key, this.cantidad);
-    this.cerrarModal();
+    console.log(this.myItem.key);
+    /*
+    this.pedidoactualService.addItemPedido(this.myItem.key, this.cantidad);
+    this.cerrarModal();*/
   }
 }

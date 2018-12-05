@@ -36,7 +36,6 @@ import { PedidoactualService } from '../services/pedidoactual.service';
     LoginPage,
     PerfilPage,
     MenuPage,
-    HomePage,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +51,6 @@ import { PedidoactualService } from '../services/pedidoactual.service';
     LoginPage,
     PerfilPage,
     MenuPage,
-    HomePage,
   ],
   providers: [
     StatusBar,

@@ -65,6 +65,7 @@ export class MenuPage {
     });
 
     this.menuService.getItemList(this.idRestaurante).subscribe(values => {
+      console.log(values);
       this.itemList = values;
       this.entranteList = this.itemList.filter(value => value.categoria === 0);
       this.primeroList = this.itemList.filter(value => value.categoria === 1);
