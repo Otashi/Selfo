@@ -10,4 +10,17 @@ page-detallepedido {
   h3{
     text-align: center
   }
+  .total{
+    text-align: right;
+    color: white;
+    font-size: 25px;
+  }
+  .precio{
+    text-align: right;
+    color: blue;
+    font-size: 15px;
+  }
+  ion-list{
+    margin-bottom: 0 !important;
+  }
 }

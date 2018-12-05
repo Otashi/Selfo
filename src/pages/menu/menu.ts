@@ -97,8 +97,7 @@ export class MenuPage {
   }
 
   openModalDetallePedido(){
-    console.log(this.pedidoactualService.myItemList);
-    /*const myModal = this.modalController.create('DetallepedidoPage', {platos: this.pedidoactualService.myItemList, restaurante: this.myRestaurante});
-    myModal.present();*/
+    const myModal = this.modalController.create('DetallepedidoPage', {platos: this.pedidoactualService.myItemList, restaurante: this.myRestaurante});
+    myModal.present();
   }
 }
