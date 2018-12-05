@@ -66,14 +66,32 @@ export class PedidoactualService {
 
   //Por cada item que hay en el pedido, nos guardamos el item
   getItems(){
+    this.myItemList.splice(0, this.myItemList.length);
     this.myItemsPedido.forEach(item =>{
       this.db.object<Item>('/items/' + item.$key).valueChanges().subscribe( value =>{
         var itemcantidad: Itempedido = new Itempedido();
         itemcantidad.item = value;
+        itemcantidad.item.key = item.$key;
         itemcantidad.cantidad = item.cantidad;
         this.myItemList.push(itemcantidad);
         //console.log(value);
       });
     })
+  }
+
+  deleteItemPedido(nuevoArray: Itempedido[], idItemABorrar: string){
+    this.myItemsPedido = nuevoArray;
+    this.db.object('/pedidoitem/' + this.myPedido.key + '/' + idItemABorrar).remove();
+  }
+
+  addItemPedido(idItem: string, cantidad: number){
+    this.myItemList.forEach(val=>{
+      if(val.item.key == idItem){
+        cantidad = val.cantidad + cantidad;
+      }
+    })
+    this.db.object('/pedidoitem/' + this.myPedido.key + '/' + idItem).update({
+      cantidad: cantidad
+    });
   }
 }

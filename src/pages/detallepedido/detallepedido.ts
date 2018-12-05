@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ViewController, ToastController } from 'ionic-angular';
 import { Restaurante } from '../../model/restaurante';
 import { PedidoactualService } from '../../services/pedidoactual.service';
 import { Itempedido } from '../../model/itempedido';
@@ -22,7 +22,8 @@ export class DetallepedidoPage {
   myRestaurante: Restaurante;
   total: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController, private pedidoactualService: PedidoactualService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController, private pedidoactualService: PedidoactualService,
+    private toasController: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -49,9 +50,20 @@ export class DetallepedidoPage {
 
   borrarItem(index: number){
     console.log(index);
+    var idItemABorrar = this.myItemsPedido[index].item.key;
     this.myItemsPedido.splice(index,1);
+    this.pedidoactualService.deleteItemPedido(this.myItemsPedido, idItemABorrar);
+    this.mostrarToast("Plato eliminado de tu pedido");
     this.total = 0;
     this.calcularTotal();
   }
 
+  mostrarToast(mensaje: string){
+    let toast = this.toasController.create({
+      message: mensaje,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
 }

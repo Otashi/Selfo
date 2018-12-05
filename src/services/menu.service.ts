@@ -13,7 +13,10 @@ export class MenuService {
   }
 
   getItemList(idRestaurante: string) {
-    return this.itemList = this.db.list<Item>('/items', ref => ref.orderByChild('idRestaurante').equalTo(idRestaurante)).valueChanges();
+    return this.itemList = this.db.list<Item>('/items', ref => ref.orderByChild('idRestaurante').equalTo(idRestaurante)).snapshotChanges()
+    .map(val =>{
+      return val.map( c => ({$key: c.payload.key, ...c.payload.val()}));
+    });
     /*this.db.list('/items').valueChanges().subscribe((datas) => {
       console.log("datas", datas)
       this.itemList = datas;

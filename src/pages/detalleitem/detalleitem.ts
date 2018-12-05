@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, NavParams, Nav } from 'ionic-angular';
 import { Item } from '../../model/item';
+import { PedidoactualService } from '../../services/pedidoactual.service';
 
 /**
  * Generated class for the DetalleitemPage page.
@@ -19,9 +20,7 @@ export class DetalleitemPage {
   myItem : Item;
   options : any;
   cantidad: number = 1;
-  constructor(public view: ViewController, public navParams: NavParams) {
-
-    
+  constructor(public view: ViewController, public navParams: NavParams, private pedidoactualService: PedidoactualService) {
   }
 
   ionViewWillLoad() {
@@ -42,4 +41,8 @@ export class DetalleitemPage {
     this.cantidad = this.cantidad + 1;
   }
 
+  anadirItemAPedido(){
+    this.pedidoactualService.addItemPedido(this.myItem.$key, this.cantidad);
+    this.cerrarModal();
+  }
 }

@@ -76,7 +76,6 @@ export class MenuPage {
 
   ionViewWillLoad(){
     //this.pedidoactualService.checkPedidoSinAcabar();
-    console.log("primens");
   }
 
   ionViewWillEnter() {
