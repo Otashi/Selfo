@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, Menu } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -17,7 +17,6 @@ import { firebaseConfig } from './firebase.credentials';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthService } from '../services/auth.service';
-import { MenuPage } from '../pages/menu/menu';
 import { MenuService } from '../services/menu.service';
 import { RestauranteService } from '../services/restaurante.service';
 import { ComponentsModule } from '../components/components.module';
@@ -27,15 +26,14 @@ import { ImageService } from '../services/image.service';
 import { Camera } from '@ionic-native/camera';
 import { PedidoService } from '../services/pedido.service';
 import { PedidoactualService } from '../services/pedidoactual.service';
+import { HomePageModule } from '../pages/home/home.module';
+import { LoginPageModule } from '../pages/login/login.module';
+import { PerfilPageModule } from '../pages/perfil/perfil.module';
 
 
 @NgModule({
   declarations: [
     MyApp,
-    ListPage,
-    LoginPage,
-    PerfilPage,
-    MenuPage,
   ],
   imports: [
     BrowserModule,
@@ -43,15 +41,12 @@ import { PedidoactualService } from '../services/pedidoactual.service';
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     ComponentsModule,
+    HomePageModule,
+    LoginPageModule,
+    PerfilPageModule,
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    ListPage,
-    LoginPage,
-    PerfilPage,
-    MenuPage,
-  ],
+  entryComponents: [],
   providers: [
     StatusBar,
     SplashScreen,

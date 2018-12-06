@@ -54,9 +54,9 @@ export class MenuPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad MenuPage');
 
-    this.idRestaurante = 'R0000'; //Borrar
+    //this.idRestaurante = 'R0000'; //Borrar
     //Recoge el valor escaneado
-    //this.idRestaurante = this.navParams.get('idRestaurante');
+    this.idRestaurante = this.navParams.get('idRestaurante');
     //this.mesa = this.navParams.get('mesa'); //Cuando se tenga la mesa en el QR
     //console.log(this.idRestaurante);
 
@@ -89,7 +89,7 @@ export class MenuPage {
     this.myPedido.fecha = date.toLocaleDateString();
     this.myPedido.estado = Estado.Borrador;
     this.myPedido.idRestaurante = this.idRestaurante;
-    this.myPedido.idUsuario = 'vAnd1yz4a0gMBWEzy8oicnYstQN2'//this.authService.getUid();
+    this.myPedido.idUsuario = this.authService.getUid();
     this.myPedido.mesa = "99";
     this.myPedido.total = '0';
     this.pedidoService.createPedido(this.myPedido);
@@ -97,7 +97,8 @@ export class MenuPage {
   }
 
   openModalDetallePedido(){
-    const myModal = this.modalController.create('DetallepedidoPage', {platos: this.pedidoactualService.myItemList, restaurante: this.myRestaurante});
+
+    const myModal = this.modalController.create('DetallepedidoPage', {platos: this.pedidoactualService.myItemList, restaurante: this.myRestaurante, paginaIniciadora:'Menu'});
     myModal.present();
   }
 }

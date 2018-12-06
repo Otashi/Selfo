@@ -44,8 +44,7 @@ export class DetalleitemPage {
 
   anadirItemAPedido(){
     console.log(this.myItem.key);
-    /*
     this.pedidoactualService.addItemPedido(this.myItem.key, this.cantidad);
-    this.cerrarModal();*/
+    this.cerrarModal();
   }
 }

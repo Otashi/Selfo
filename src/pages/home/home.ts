@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, ModalCmp, ModalController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service'
 import { LoginPage } from '../login/login';
 
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+import { PedidoactualService } from '../../services/pedidoactual.service';
 
 
 /**
@@ -21,7 +22,8 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 export class HomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthService,
-    private qrScanner: QRScanner) {
+    private qrScanner: QRScanner, private menuCtrl: MenuController, private modalController: ModalController,
+    private pedidoactualService: PedidoactualService) {
     if(!this.auth.authenticated){
       console.log("Not logged");
       //this.navCtrl.setRoot(LoginPage);
@@ -33,6 +35,7 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
+    this.menuCtrl.enable(true);
   }
 
   scanQR(){
@@ -62,5 +65,4 @@ export class HomePage {
   })
   .catch((e: any) => console.log('Error is', e));
   }
-
 }

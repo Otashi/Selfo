@@ -20,6 +20,7 @@ export class DetallepedidoPage {
 
   myItemsPedido: Itempedido[];
   myRestaurante: Restaurante;
+  paginaIniciadora: string;
   total: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController, private pedidoactualService: PedidoactualService,
@@ -38,6 +39,8 @@ export class DetallepedidoPage {
     console.log('ionViewWillLoad DetallepedidoPage');
     this.myItemsPedido = this.navParams.get('platos');
     this.myRestaurante = this.navParams.get('restaurante');
+    this.paginaIniciadora = this.navParams.get('paginaIniciadora');
+    console.log('Pagina iniciadora :) ' + this.paginaIniciadora)
     console.log(this.myItemsPedido);
     this.calcularTotal()
   }

@@ -53,7 +53,9 @@ export class LoginPage {
       };
       this.auth.signInWithEmail(credentials)
 			.then(
-				() => this.navCtrl.setRoot('HomePage'),
+				() => {
+          this.menuCtrl.enable(false);
+          this.navCtrl.push('HomePage')},
 				error => myAlert("Email o contraseña incorrectas", 'Error', this.alertCtrl)
 			);
     }

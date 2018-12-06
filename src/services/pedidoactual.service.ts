@@ -10,15 +10,16 @@ import { Itempedido } from '../model/itempedido';
 @Injectable()
 export class PedidoactualService {
 
-  userId: string = 'vAnd1yz4a0gMBWEzy8oicnYstQN2';
+  userId: string ;//= 'vAnd1yz4a0gMBWEzy8oicnYstQN2';
   myPedido: Pedido; //El pedido que está en borrador o en proceso
   myItemsPedido: any; //Los items que tengo dentro del pedido
   myItemList: Itempedido[]; //Detalle de los items que tengo en el pedido (objeto entero)
+  checked: boolean = false;
 
   constructor(private db: AngularFireDatabase, private authService: AuthService, private pedidoService: PedidoService) {
     //this.userId = this.authService.getUid();
     this.myItemList = [];
-    if(this.userId){
+    if(this.userId && this.checked == false){
       this.checkPedidoSinAcabar();
     } else {
       //Error.
@@ -45,6 +46,7 @@ export class PedidoactualService {
       else{ //No tiene pedidos
         this.myItemsPedido = null;
       }
+      this.checked = true;
 
     });
   }
