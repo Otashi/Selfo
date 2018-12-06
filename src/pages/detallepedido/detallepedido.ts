@@ -40,7 +40,6 @@ export class DetallepedidoPage {
     this.myItemsPedido = this.navParams.get('platos');
     this.myRestaurante = this.navParams.get('restaurante');
     this.paginaIniciadora = this.navParams.get('paginaIniciadora');
-    console.log('Pagina iniciadora :) ' + this.paginaIniciadora)
     console.log(this.myItemsPedido);
     this.calcularTotal()
   }

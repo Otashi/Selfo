@@ -17,8 +17,9 @@ export class PedidoactualService {
   checked: boolean = false;
 
   constructor(private db: AngularFireDatabase, private authService: AuthService, private pedidoService: PedidoService) {
-    //this.userId = this.authService.getUid();
     this.myItemList = [];
+    this.userId = this.authService.getUid();
+    console.log(this.checked.valueOf.toString());
     if(this.userId && this.checked == false){
       this.checkPedidoSinAcabar();
     } else {
@@ -31,8 +32,8 @@ export class PedidoactualService {
     this.pedidoService.getPedidosUsuario(this.userId).subscribe(val => {
       val.forEach(pedido => {
         if(pedido.estado == Estado.Borrador || pedido.estado == Estado.EnProceso){
+          console.log(pedido);
           this.myPedido = pedido;
-          this.myPedido.key = pedido.$key;
         }
       })
 
@@ -50,19 +51,11 @@ export class PedidoactualService {
 
     });
   }
-
-  getPedidosUsuario(userid:string){
-    return this.db.list<Pedido>('/pedidos', ref => ref.orderByChild('idUsuario').equalTo(userid)).snapshotChanges()
-    .map(val => {
-          return val.map(c => ({$key: c.payload.key, ...c.payload.val()}));
-        }
-    );
-  }
-
+  
   getItemsPedido(idPedido: string){
     return this.db.list('/pedidoitem/' + idPedido).snapshotChanges()
     .map(val => {
-      return val.map( c => ({$key: c.payload.key, ...c.payload.val()}));
+      return val.map( c => ({key: c.payload.key, ...c.payload.val()}));
     });
   }
 
@@ -70,10 +63,10 @@ export class PedidoactualService {
   getItems(){
     this.myItemList.splice(0, this.myItemList.length);
     this.myItemsPedido.forEach(item =>{
-      this.db.object<Item>('/items/' + item.$key).valueChanges().subscribe( value =>{
+      this.db.object<Item>('/items/' + item.key).valueChanges().subscribe( value =>{
         var itemcantidad: Itempedido = new Itempedido();
         itemcantidad.item = value;
-        itemcantidad.item.key = item.$key;
+        itemcantidad.item.key = item.key;
         itemcantidad.cantidad = item.cantidad;
         this.myItemList.push(itemcantidad);
         //console.log(value);

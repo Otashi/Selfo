@@ -22,8 +22,7 @@ import { PedidoactualService } from '../../services/pedidoactual.service';
 export class HomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthService,
-    private qrScanner: QRScanner, private menuCtrl: MenuController, private modalController: ModalController,
-    private pedidoactualService: PedidoactualService) {
+    private qrScanner: QRScanner, private menuCtrl: MenuController, private modalController: ModalController) {
     if(!this.auth.authenticated){
       console.log("Not logged");
       //this.navCtrl.setRoot(LoginPage);

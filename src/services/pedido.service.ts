@@ -8,8 +8,6 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class PedidoService {
 
-  pedidosRef = firebase.database().ref("pedidos");
-
   constructor(private db: AngularFireDatabase) {
   }
 
@@ -29,7 +27,7 @@ export class PedidoService {
   getPedidosUsuario(userid:string){
     return this.db.list<Pedido>('/pedidos', ref => ref.orderByChild('idUsuario').equalTo(userid)).snapshotChanges()
     .map(val => {
-          return val.map(c => ({$key: c.payload.key, ...c.payload.val()}));
+          return val.map(c => ({key: c.payload.key, ...c.payload.val()}));
         }
     );
   }

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { PedidoService } from '../../services/pedido.service';
+import { AuthService } from '../../services/auth.service';
+import { Pedido } from '../../model/pedido';
 
 /**
  * Generated class for the MispedidosPage page.
@@ -15,7 +18,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MispedidosPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  myPedidos: Pedido[];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private pedidoService: PedidoService, 
+    private authService: AuthService) {
+    this.pedidoService.getPedidosUsuario(this.authService.getUid()).subscribe(values=>{
+      this.myPedidos.values;
+    });
   }
 
   ionViewDidLoad() {

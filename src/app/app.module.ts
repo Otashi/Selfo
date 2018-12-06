@@ -29,6 +29,7 @@ import { PedidoactualService } from '../services/pedidoactual.service';
 import { HomePageModule } from '../pages/home/home.module';
 import { LoginPageModule } from '../pages/login/login.module';
 import { PerfilPageModule } from '../pages/perfil/perfil.module';
+import { MispedidosPageModule } from '../pages/mispedidos/mispedidos.module';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { PerfilPageModule } from '../pages/perfil/perfil.module';
     HomePageModule,
     LoginPageModule,
     PerfilPageModule,
+    MispedidosPageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [],
