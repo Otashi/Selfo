@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PedidoService } from '../../services/pedido.service';
 import { AuthService } from '../../services/auth.service';
 import { Pedido } from '../../model/pedido';
+import { RestauranteService } from '../../services/restaurante.service';
+import { Restaurante } from '../../model/restaurante';
+import { stringify } from '@angular/core/src/util';
 
 /**
  * Generated class for the MispedidosPage page.
@@ -19,16 +22,36 @@ import { Pedido } from '../../model/pedido';
 export class MispedidosPage {
 
   myPedidos: Pedido[];
+  mapRestaurante: Map<string, Restaurante>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private pedidoService: PedidoService, 
-    private authService: AuthService) {
+    private authService: AuthService, private restauranteService: RestauranteService) {
+      this.mapRestaurante = new Map<string, Restaurante>();
+  }
+
+  ionViewWillLoad() {
+    console.log('ionViewDidLoad MispedidosPage');
     this.pedidoService.getPedidosUsuario(this.authService.getUid()).subscribe(values=>{
-      this.myPedidos.values;
+      this.myPedidos = values;
+      this.myPedidos.forEach(pedido => {
+        this.restauranteService.getRestauranteById(pedido.idRestaurante).subscribe(rest =>{
+          this.mapRestaurante.set(pedido.idRestaurante, rest);
+        })
+      })
     });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MispedidosPage');
+  getFotoRestauranteById(idRestaurante: string){
+    if(this.mapRestaurante.get(idRestaurante)){
+      return this.mapRestaurante.get(idRestaurante).fotoRestaurante;
+    }
   }
+  getNombreRestauranteById(idRestaurante: string){
+    if(this.mapRestaurante.get(idRestaurante)){
+      return this.mapRestaurante.get(idRestaurante).nombre;
+    }
+  }
+
+
 
 }

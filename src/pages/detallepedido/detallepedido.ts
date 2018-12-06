@@ -41,7 +41,8 @@ export class DetallepedidoPage {
     this.myRestaurante = this.navParams.get('restaurante');
     this.paginaIniciadora = this.navParams.get('paginaIniciadora');
     console.log(this.myItemsPedido);
-    this.calcularTotal()
+    this.calcularTotal();
+    this.pedidoactualService.actualizarPrecioPedido(this.total);
   }
 
   calcularTotal(){
@@ -58,6 +59,7 @@ export class DetallepedidoPage {
     this.mostrarToast("Plato eliminado de tu pedido");
     this.total = 0;
     this.calcularTotal();
+    this.pedidoactualService.actualizarPrecioPedido(this.total);
   }
 
   mostrarToast(mensaje: string){

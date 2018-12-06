@@ -14,13 +14,11 @@ export class PedidoactualService {
   myPedido: Pedido; //El pedido que está en borrador o en proceso
   myItemsPedido: any; //Los items que tengo dentro del pedido
   myItemList: Itempedido[]; //Detalle de los items que tengo en el pedido (objeto entero)
-  checked: boolean = false;
 
   constructor(private db: AngularFireDatabase, private authService: AuthService, private pedidoService: PedidoService) {
     this.myItemList = [];
     this.userId = this.authService.getUid();
-    console.log(this.checked.valueOf.toString());
-    if(this.userId && this.checked == false){
+    if(this.userId){
       this.checkPedidoSinAcabar();
     } else {
       //Error.
@@ -47,11 +45,10 @@ export class PedidoactualService {
       else{ //No tiene pedidos
         this.myItemsPedido = null;
       }
-      this.checked = true;
 
     });
   }
-  
+
   getItemsPedido(idPedido: string){
     return this.db.list('/pedidoitem/' + idPedido).snapshotChanges()
     .map(val => {
@@ -87,6 +84,12 @@ export class PedidoactualService {
     })
     this.db.object('/pedidoitem/' + this.myPedido.key + '/' + idItem).update({
       cantidad: cantidad
+    });
+  }
+
+  actualizarPrecioPedido(precio: number){
+    this.db.object('/pedidos/' + this.myPedido.key).update({
+      total: precio
     });
   }
 }

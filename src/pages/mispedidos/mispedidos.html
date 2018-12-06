@@ -6,13 +6,29 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>mispedidos</ion-title>
+  <ion-navbar hideBackButton>
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title>Mis Pedidos</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-list>
+    <div *ngFor="let pedido of myPedidos">
+      <ion-item text-wrap (click) = "openModal(pedido)">
+        <ion-thumbnail item-left>
+          <img src="{{getFotoRestauranteById(pedido?.idRestaurante)}}">
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ getNombreRestauranteById(pedido?.idRestaurante) }}</h2>
+          <p>{{pedido?.fecha}}</p>
+          <p class="precio">{{pedido?.total}} €</p>
+        </ion-label>
+      </ion-item>
+    </div>
+  </ion-list>
 </ion-content>

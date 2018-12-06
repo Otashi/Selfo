@@ -64,4 +64,8 @@ export class HomePage {
   })
   .catch((e: any) => console.log('Error is', e));
   }
+
+  openModalMisPedidos(){
+    this.navCtrl.push('MispedidosPage');
+  }
 }
