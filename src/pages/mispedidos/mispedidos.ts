@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PedidoService } from '../../services/pedido.service';
 import { AuthService } from '../../services/auth.service';
-import { Pedido } from '../../model/pedido';
+import { Pedido, Estado } from '../../model/pedido';
 import { RestauranteService } from '../../services/restaurante.service';
 import { Restaurante } from '../../model/restaurante';
-import { stringify } from '@angular/core/src/util';
 
 /**
  * Generated class for the MispedidosPage page.
@@ -51,7 +50,22 @@ export class MispedidosPage {
       return this.mapRestaurante.get(idRestaurante).nombre;
     }
   }
-
-
+  getEstadoPedido(idEstado: number){
+    switch(idEstado) { 
+      case Estado.Borrador: { 
+         return "Borrador";
+      } 
+      case Estado.EnProceso: { 
+         return "En Proceso";
+      } 
+      case Estado.Finalizado: {
+        return "Finalizado";
+      } 
+      default: { 
+         console.log("Invalid choice"); 
+         break;              
+      } 
+   }
+  }
 
 }

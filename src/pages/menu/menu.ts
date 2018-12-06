@@ -52,11 +52,13 @@ export class MenuPage {
      }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MenuPage');
+  }
 
-    //this.idRestaurante = 'R0000'; //Borrar
+  ionViewWillLoad(){
+    //this.pedidoactualService.checkPedidoSinAcabar();
+    this.idRestaurante = 'R0000'; //Borrar
     //Recoge el valor escaneado
-    this.idRestaurante = this.navParams.get('idRestaurante');
+    //this.idRestaurante = this.navParams.get('idRestaurante');
     //this.mesa = this.navParams.get('mesa'); //Cuando se tenga la mesa en el QR
     //console.log(this.idRestaurante);
 
@@ -73,10 +75,6 @@ export class MenuPage {
       this.postreList = this.itemList.filter(value => value.categoria === 3);
       this.bebidaList = this.itemList.filter(value => value.categoria === 4);
     });
-  }
-
-  ionViewWillLoad(){
-    //this.pedidoactualService.checkPedidoSinAcabar();
   }
 
   ionViewWillEnter() {

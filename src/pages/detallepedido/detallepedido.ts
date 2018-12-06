@@ -29,6 +29,14 @@ export class DetallepedidoPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DetallepedidoPage');
+    console.log('ionViewDidLoad MenuPage');
+    if(this.pedidoactualService.myItemsPedido == null){
+      console.log("NO TENGO PEDIDOS");
+      //TODO CREAR PEDIDO
+    }
+    else{
+      console.log("Tengo pedidooooooo");
+    }
   }
 
   cerrarModal(){

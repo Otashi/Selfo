@@ -26,6 +26,7 @@
         <ion-label>
           <h2>{{ getNombreRestauranteById(pedido?.idRestaurante) }}</h2>
           <p>{{pedido?.fecha}}</p>
+          <p>{{getEstadoPedido(pedido?.estado)}}</p>
           <p class="precio">{{pedido?.total}} €</p>
         </ion-label>
       </ion-item>

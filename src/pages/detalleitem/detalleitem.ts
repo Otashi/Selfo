@@ -23,6 +23,17 @@ export class DetalleitemPage {
   constructor(public view: ViewController, public navParams: NavParams, private pedidoactualService: PedidoactualService) {
   }
 
+  ionViewDidLoad(){
+    console.log('ionViewDidLoad MenuPage');
+    if(this.pedidoactualService.myItemsPedido == null){
+      console.log("NO TENGO PEDIDOS");
+      //CREAR PEDIDO
+    }
+    else{
+      console.log("Tengo pedidooooooo");
+    }
+  }
+
   ionViewWillLoad() {
     this.myItem = this.navParams.get('item');
     //this.myItem.key = this.navParams.get('item').$key;
