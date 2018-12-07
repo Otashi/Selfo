@@ -38,7 +38,7 @@ export class HomePage {
   }
 
   scanQR(){
-    this.qrScanner.prepare()
+   /* this.qrScanner.prepare()
   .then((status: QRScannerStatus) => {
      if (status.authorized) {
        // camera permission was granted
@@ -51,7 +51,7 @@ export class HomePage {
          this.navCtrl.push('MenuPage', {
           idRestaurante: text.result
          });
-         
+
        });
 
      } else if (status.denied) {
@@ -62,7 +62,11 @@ export class HomePage {
        // permission was denied, but not permanently. You can ask for permission again at a later time.
      }
   })
-  .catch((e: any) => console.log('Error is', e));
+  .catch((e: any) => console.log('Error is', e));*/
+
+  this.navCtrl.push('MenuPage', {
+    idRestaurante: 'Borrar'
+   });
   }
 
   openModalMisPedidos(){

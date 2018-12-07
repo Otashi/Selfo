@@ -52,6 +52,8 @@ export class MenuPage {
      }
 
   ionViewDidLoad() {
+    console.log("CHECK PEDIDO SIN ACABAR");
+    this.pedidoactualService.checkPedidoSinAcabar();
   }
 
   ionViewWillLoad(){
@@ -67,7 +69,6 @@ export class MenuPage {
     });
 
     this.menuService.getItemList(this.idRestaurante).subscribe(values => {
-      console.log(values);
       this.itemList = values;
       this.entranteList = this.itemList.filter(value => value.categoria === 0);
       this.primeroList = this.itemList.filter(value => value.categoria === 1);
@@ -78,7 +79,6 @@ export class MenuPage {
   }
 
   ionViewWillEnter() {
-
   }
 
   createPedido(){
@@ -95,8 +95,7 @@ export class MenuPage {
   }
 
   openModalDetallePedido(){
-
-    const myModal = this.modalController.create('DetallepedidoPage', {platos: this.pedidoactualService.myItemList, restaurante: this.myRestaurante, paginaIniciadora:'Menu'});
+    const myModal = this.modalController.create('DetallepedidoPage', {platos: this.pedidoactualService.getItemList(), restaurante: this.myRestaurante, paginaIniciadora:'Menu'});
     myModal.present();
   }
 }
