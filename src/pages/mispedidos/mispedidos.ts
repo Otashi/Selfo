@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { Pedido, Estado } from '../../model/pedido';
 import { RestauranteService } from '../../services/restaurante.service';
 import { Restaurante } from '../../model/restaurante';
+import { tap, map } from 'rxjs/operators';
 
 /**
  * Generated class for the MispedidosPage page.
@@ -30,14 +31,15 @@ export class MispedidosPage {
 
   ionViewWillLoad() {
     console.log('ionViewDidLoad MispedidosPage');
-   /*  this.pedidoService.getPedidosUsuario(this.authService.getUid()).subscribe(values=>{
+    this.pedidoService.getPedidosUsuario(this.authService.getUid()).subscribe(values=>{
       this.myPedidos = values;
       this.myPedidos.forEach(pedido => {
+        console.log(pedido);
         this.restauranteService.getRestauranteById(pedido.idRestaurante).subscribe(rest =>{
           this.mapRestaurante.set(pedido.idRestaurante, rest);
         })
       })
-    }); */
+    }); 
   }
 
   getFotoRestauranteById(idRestaurante: string){

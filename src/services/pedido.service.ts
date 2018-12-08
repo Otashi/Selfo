@@ -11,10 +11,9 @@ export class PedidoService {
   constructor(private db: AngularFireDatabase) {
   }
 
-  createPedido(pedido: Pedido) {
+  createPedido(pedido: Pedido, idUsuario: string,  key: string) {
 
-    const key = this.db.createPushId();
-    this.db.object('/pedidos/' + key).update(pedido);
+    this.db.object('/pedidosporusuario/' + idUsuario + '/' +key).update(pedido);
     /*this.db.list('/items').valueChanges().subscribe((datas) => {
       console.log("datas", datas)
       this.itemList = datas;
@@ -24,8 +23,8 @@ export class PedidoService {
 
   }
 
-  getPedidosUsuario(userid:string, idRestaurante: string){
-    return this.db.list<Pedido>('/pedidos/' + userid + '/' + idRestaurante, ref => ref.orderByChild('estado').equalTo(0)).snapshotChanges()
+  getPedidosUsuario(userid:string){
+    return this.db.list<Pedido>('/pedidosporusuario/' + userid).snapshotChanges()
     .map(val => {
           return val.map(c => ({key: c.payload.key, ...c.payload.val()}));
         }

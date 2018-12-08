@@ -85,6 +85,7 @@ export class MenuPage {
         this.myPedido = val[0] as Pedido;
         console.log(this.myPedido);
         this.pedidoactualService.getCantidadItemsPorPedido(this.myPedido.key).subscribe(val=>{
+          this.numItems = 0;
           val.forEach(elemento => {
             const valor = elemento.payload.val() as Itempedido;
             this.numItems = this.numItems + valor.cantidad;

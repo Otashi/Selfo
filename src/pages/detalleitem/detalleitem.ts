@@ -4,6 +4,7 @@ import { Item } from '../../model/item';
 import { PedidoactualService } from '../../services/pedidoactual.service';
 import { Pedido, Estado } from '../../model/pedido';
 import { AuthService } from '../../services/auth.service';
+import { PedidoService } from '../../services/pedido.service';
 
 /**
  * Generated class for the DetalleitemPage page.
@@ -25,7 +26,7 @@ export class DetalleitemPage {
   cantidadItem: number;
   idNewPedido: string;
   constructor(public view: ViewController, public navParams: NavParams, private pedidoactualService: PedidoactualService,
-    private auth: AuthService, private toastController: ToastController) {
+    private auth: AuthService, private toastController: ToastController, private pedidoService: PedidoService) {
   }
 
   ionViewDidLoad(){
@@ -73,6 +74,7 @@ export class DetalleitemPage {
       this.pedidoactualService.addItemPedido(this.myItem.key, this.cantidad, this.idNewPedido);
     }
     this.mostrarToast("Plato añadido a tu pedido");
+    //TODO hay que actualizar el precio.
     this.cerrarModal();
   }
 
@@ -88,9 +90,11 @@ export class DetalleitemPage {
     var date = new Date();
     newPedido.fecha = date.toLocaleDateString();
     newPedido.estado = Estado.Borrador;
+    newPedido.idRestaurante = this.myItem.idRestaurante;
     newPedido.mesa = "99";
     newPedido.total = '0';
     this.idNewPedido = this.pedidoactualService.createPedido(this.auth.getUid(), this.myItem.idRestaurante, newPedido);
+    this.pedidoService.createPedido(newPedido, this.auth.getUid(), this.idNewPedido);
 
   }
 

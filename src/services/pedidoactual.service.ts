@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase  } from 'angularfire2/database';
 import { Pedido, Estado } from '../model/pedido';
 import 'rxjs/add/operator/map';
-import { AuthService } from './auth.service';
 import { PedidoService } from './pedido.service';
 import { Item } from '../model/item';
 import { Itempedido } from '../model/itempedido';

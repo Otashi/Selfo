@@ -5,6 +5,7 @@ export class Pedido {
     fecha: string;
     estado: number;
     total: string;
+    idRestaurante: string;
 
     constructor (){
 
