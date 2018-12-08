@@ -26,10 +26,13 @@ export class PedidoactualService {
   }
 
   //Mira si existen pedidos que no se han acabado.
-  checkPedidoSinAcabar(){
+  checkPedidoSinAcabar(idRestaurante: string) : Observable<{}>{
     //console.log("CHECK PEDIDO!!!!!!!!!!!");
     this.userId = this.afaService.auth.currentUser.uid;
-    return this.pedidoService.getPedidosUsuario(this.userId);
+    return this.db.list('pedidos/' + this.userId + '/' + idRestaurante, ref => ref.orderByChild('estado').equalTo(0)).snapshotChanges()
+    .map(val=>{
+      return val.map(c => ({key: c.payload.key, ...c.payload.val()}))
+    });
   }
 
   getAllItemsPedido(idPedido: string): Observable<Itempedido[]> {
@@ -78,5 +81,15 @@ export class PedidoactualService {
     this.db.object('/pedidos/' + this.myPedido.key).update({
       total: precio
     });
+  }
+
+  createPedido(idUser: string, idRestaurante: string, pedido: Pedido){
+    const key = this.db.createPushId();
+    this.db.object('/pedidos/' + idUser + '/' + idRestaurante + '/' + key).update(pedido);
+    return key;
+  }
+
+  getCantidadItemsPorPedido(idPedido: string){
+    return this.db.list('pedidoitem/' + idPedido).snapshotChanges();
   }
 }

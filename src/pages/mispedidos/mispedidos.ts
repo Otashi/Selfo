@@ -30,14 +30,14 @@ export class MispedidosPage {
 
   ionViewWillLoad() {
     console.log('ionViewDidLoad MispedidosPage');
-    this.pedidoService.getPedidosUsuario(this.authService.getUid()).subscribe(values=>{
+   /*  this.pedidoService.getPedidosUsuario(this.authService.getUid()).subscribe(values=>{
       this.myPedidos = values;
       this.myPedidos.forEach(pedido => {
         this.restauranteService.getRestauranteById(pedido.idRestaurante).subscribe(rest =>{
           this.mapRestaurante.set(pedido.idRestaurante, rest);
         })
       })
-    });
+    }); */
   }
 
   getFotoRestauranteById(idRestaurante: string){

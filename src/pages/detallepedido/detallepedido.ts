@@ -1,9 +1,10 @@
 import { Component, AfterContentChecked } from '@angular/core';
-import { IonicPage, NavController, NavParams,ViewController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ViewController, ToastController, AlertController } from 'ionic-angular';
 import { Restaurante } from '../../model/restaurante';
 import { PedidoactualService } from '../../services/pedidoactual.service';
 import { Itempedido } from '../../model/itempedido';
 import { Pedido, Estado } from '../../model/pedido';
+import { myAlert } from '../../utils/helper';
 import { Item } from '../../model/item';
 
 /**
@@ -29,7 +30,7 @@ export class DetallepedidoPage implements AfterContentChecked{
   itemDetaill: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController, private pedidoactualService: PedidoactualService,
-    private toasController: ToastController) {
+    private toasController: ToastController, private alertController: AlertController) {
       this.myItemList = [];
   }
 
@@ -38,17 +39,18 @@ export class DetallepedidoPage implements AfterContentChecked{
     this.myRestaurante = this.navParams.get('restaurante');
     this.paginaIniciadora = this.navParams.get('paginaIniciadora');
     this.myPedido = this.navParams.get('pedido');
-
-    if(this.myPedido){
+    console.log(this.myPedido);
+    if(this.myPedido.key){
       /* this.getItemsPerPedido();
       this.calcularTotal(); */
+      console.log(this.myPedido.key);
       this.pedidoactualService.getAllItemsPedido(this.myPedido.key)
       .subscribe( values => {
         this.myItemList = values;
       });
       
     } else {
-      //Crear pedido
+      myAlert("No tiene pedido activo en este restaurante", "Información", this.alertController);
     }
   }
 
@@ -60,21 +62,6 @@ export class DetallepedidoPage implements AfterContentChecked{
     console.log('ionViewWillLoad DetallepedidoPage');
     
   }
-
-  getItemsPerPedido(){
-    this.pedidoactualService.getItemsPedido(this.myPedido.key).subscribe(values => {
-      this.myItemsPedido = values;
-      this.myItemsPedido.forEach(element => {
-        var myItemPedido: Itempedido = new Itempedido();
-        this.pedidoactualService.getDetailItemFromPedido(element.key).subscribe(value =>{
-            myItemPedido.item = value;
-            myItemPedido.item.key = element.key;
-            myItemPedido.cantidad = element.cantidad;
-            this.myItemList.push(myItemPedido);
-        })
-      });
-  })
-} 
 
   ngAfterContentChecked(){
     this.total = 0;
@@ -96,7 +83,7 @@ export class DetallepedidoPage implements AfterContentChecked{
   mostrarToast(mensaje: string){
     let toast = this.toasController.create({
       message: mensaje,
-      duration: 3000,
+      duration: 1500,
       position: 'top'
     });
     toast.present();

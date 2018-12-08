@@ -10,6 +10,7 @@ import 'rxjs/add/operator/map';
 import { AuthService } from '../../services/auth.service';
 import { PedidoactualService } from '../../services/pedidoactual.service';
 import { ThrowStmt } from '@angular/compiler';
+import { Itempedido } from '../../model/itempedido';
 
 
 /**
@@ -43,6 +44,7 @@ export class MenuPage {
   idRestaurante: string;
   myPedido: Pedido;
   pedidoBorrador: Pedido;
+  numItems: number;
 
   constructor(private authService: AuthService, public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService,
     public restauranteService: RestauranteService, private modalController: ModalController, private menuCtrl: MenuController,
@@ -57,13 +59,6 @@ export class MenuPage {
   }
 
   ionViewWillLoad(){
-    this.pedidoactualService.checkPedidoSinAcabar().subscribe(val =>{
-      val.forEach(pedido => {
-        if(pedido.estado == Estado.Borrador || pedido.estado == Estado.EnProceso){ //Si un pedido está en borrador o en proceso lo añado a mi pedido actual
-          this.myPedido = pedido;
-        }
-      })
-    });
     this.idRestaurante = 'R0000'; //Borrar
     //Recoge el valor escaneado
     //this.idRestaurante = this.navParams.get('idRestaurante');
@@ -82,22 +77,26 @@ export class MenuPage {
       this.postreList = this.itemList.filter(value => value.categoria === 3);
       this.bebidaList = this.itemList.filter(value => value.categoria === 4);
     });
+    this.numItems = 0;
+
+    this.pedidoactualService.checkPedidoSinAcabar(this.idRestaurante).subscribe(val =>{
+      console.log(val);
+      if(val[0]){
+        this.myPedido = val[0] as Pedido;
+        console.log(this.myPedido);
+        this.pedidoactualService.getCantidadItemsPorPedido(this.myPedido.key).subscribe(val=>{
+          val.forEach(elemento => {
+            const valor = elemento.payload.val() as Itempedido;
+            this.numItems = this.numItems + valor.cantidad;
+            //console.log(valor.cantidad);
+          })
+        })
+        console.log(this.numItems);
+      } 
+    });
   }
 
   ionViewWillEnter() {
-  }
-
-  createPedido(){
-
-    var date = new Date();
-    this.myPedido.fecha = date.toLocaleDateString();
-    this.myPedido.estado = Estado.Borrador;
-    this.myPedido.idRestaurante = this.idRestaurante;
-    this.myPedido.idUsuario = this.authService.getUid();
-    this.myPedido.mesa = "99";
-    this.myPedido.total = '0';
-    this.pedidoService.createPedido(this.myPedido);
-
   }
 
   openModalDetallePedido(){

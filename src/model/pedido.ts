@@ -1,8 +1,6 @@
 export class Pedido {
 
     key: string
-    idUsuario: string;
-    idRestaurante: string;
     mesa: string;
     fecha: string;
     estado: number;

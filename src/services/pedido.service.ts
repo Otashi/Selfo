@@ -24,8 +24,8 @@ export class PedidoService {
 
   }
 
-  getPedidosUsuario(userid:string){
-    return this.db.list<Pedido>('/pedidos', ref => ref.orderByChild('idUsuario').equalTo(userid)).snapshotChanges()
+  getPedidosUsuario(userid:string, idRestaurante: string){
+    return this.db.list<Pedido>('/pedidos/' + userid + '/' + idRestaurante, ref => ref.orderByChild('estado').equalTo(0)).snapshotChanges()
     .map(val => {
           return val.map(c => ({key: c.payload.key, ...c.payload.val()}));
         }

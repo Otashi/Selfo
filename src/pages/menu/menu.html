@@ -13,6 +13,7 @@
     <ion-title>{{myRestaurante?.nombre}}</ion-title>
     <ion-buttons end>
       <button ion-button large (click)="openModalDetallePedido()">
+          <ion-badge *ngIf="numItems" color="accent">{{numItems}}</ion-badge>
         <ion-icon name="md-restaurant"></ion-icon>
       </button>
     </ion-buttons>
