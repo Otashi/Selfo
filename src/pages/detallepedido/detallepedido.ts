@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, AfterContentChecked } from '@angular/core';
 import { IonicPage, NavController, NavParams,ViewController, ToastController } from 'ionic-angular';
 import { Restaurante } from '../../model/restaurante';
 import { PedidoactualService } from '../../services/pedidoactual.service';
 import { Itempedido } from '../../model/itempedido';
+import { Pedido, Estado } from '../../model/pedido';
+import { Item } from '../../model/item';
 
 /**
  * Generated class for the DetallepedidoPage page.
@@ -16,26 +18,37 @@ import { Itempedido } from '../../model/itempedido';
   selector: 'page-detallepedido',
   templateUrl: 'detallepedido.html',
 })
-export class DetallepedidoPage {
+export class DetallepedidoPage implements AfterContentChecked{
 
-  myItemsPedido: Itempedido[];
+  myItemsPedido: any;
   myRestaurante: Restaurante;
+  myPedido: Pedido;
   paginaIniciadora: string;
   total: number = 0;
+  myItemList: Itempedido[];
+  itemDetaill: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController, private pedidoactualService: PedidoactualService,
     private toasController: ToastController) {
+      this.myItemList = [];
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DetallepedidoPage');
-    console.log('ionViewDidLoad MenuPage');
-    if(this.pedidoactualService.myItemsPedido == null){
-      console.log("NO TENGO PEDIDOS");
-      //TODO CREAR PEDIDO
-    }
-    else{
-      console.log("Tengo pedidooooooo");
+    this.myRestaurante = this.navParams.get('restaurante');
+    this.paginaIniciadora = this.navParams.get('paginaIniciadora');
+    this.myPedido = this.navParams.get('pedido');
+
+    if(this.myPedido){
+      /* this.getItemsPerPedido();
+      this.calcularTotal(); */
+      this.pedidoactualService.getAllItemsPedido(this.myPedido.key)
+      .subscribe( values => {
+        this.myItemList = values;
+      });
+      
+    } else {
+      //Crear pedido
     }
   }
 
@@ -45,29 +58,39 @@ export class DetallepedidoPage {
 
   ionViewWillLoad() {
     console.log('ionViewWillLoad DetallepedidoPage');
-    this.myItemsPedido = this.navParams.get('platos');
-    this.myRestaurante = this.navParams.get('restaurante');
-    this.paginaIniciadora = this.navParams.get('paginaIniciadora');
-    console.log(this.myItemsPedido);
-    this.calcularTotal();
-    this.pedidoactualService.actualizarPrecioPedido(this.total);
+    
   }
 
-  calcularTotal(){
-    this.myItemsPedido.forEach(val=>{
-      this.total = this.total + val.cantidad * parseFloat(val.item.precio);
-    })
-  }
+  getItemsPerPedido(){
+    this.pedidoactualService.getItemsPedido(this.myPedido.key).subscribe(values => {
+      this.myItemsPedido = values;
+      this.myItemsPedido.forEach(element => {
+        var myItemPedido: Itempedido = new Itempedido();
+        this.pedidoactualService.getDetailItemFromPedido(element.key).subscribe(value =>{
+            myItemPedido.item = value;
+            myItemPedido.item.key = element.key;
+            myItemPedido.cantidad = element.cantidad;
+            this.myItemList.push(myItemPedido);
+        })
+      });
+  })
+} 
 
-  borrarItem(index: number){
-    console.log(index);
-    var idItemABorrar = this.myItemsPedido[index].item.key;
-    this.myItemsPedido.splice(index,1);
-    this.pedidoactualService.deleteItemPedido(this.myItemsPedido, idItemABorrar);
-    this.mostrarToast("Plato eliminado de tu pedido");
+  ngAfterContentChecked(){
     this.total = 0;
-    this.calcularTotal();
-    this.pedidoactualService.actualizarPrecioPedido(this.total);
+    if(this.myItemList !== undefined) {
+      this.total = this.myItemList.reduce((acumulado, valor) => 
+        valor.item !== undefined ? acumulado + (parseFloat(valor.item.precio) * valor.cantidad) : 0, 0);
+    }
+  }
+
+  borrarItem(item: Itempedido){
+    // console.log(this.myItemList[index]);
+    // this.myItemList.splice(index,1);
+    //console.log(this.myPedido.key + '- '+ item.itemKey);
+    this.pedidoactualService.deleteItemPedido(this.myPedido.key, item.itemKey);
+    this.mostrarToast("Plato eliminado de tu pedido");
+    //this.pedidoactualService.actualizarPrecioPedido(this.total);
   }
 
   mostrarToast(mensaje: string){

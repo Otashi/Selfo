@@ -1,6 +1,7 @@
 import { Item } from "./item";
 
 export class Itempedido {
-  item: Item;
+  item?: Item;
+  itemKey?: string;
   cantidad: number;
 }

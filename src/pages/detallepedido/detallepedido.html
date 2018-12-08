@@ -20,7 +20,7 @@
   <ion-img class="imgRest" src='{{myRestaurante?.fotoRestaurante}}'></ion-img>
   <h3>{{myRestaurante?.nombre}}</h3>
   <ion-list>
-    <ion-item-sliding *ngFor="let elemento of myItemsPedido; let i = index" [attr.data-index]="i">
+    <ion-item-sliding *ngFor="let elemento of myItemList">
         <ion-item text-wrap>
           <ion-thumbnail item-left>
             <img src="{{elemento?.item.urlImage}}">
@@ -31,10 +31,10 @@
           </ion-label>
         </ion-item>
       <ion-item-options side="right">
-        <button ion-button (click)="borrarItem(i);">Borrar</button>
+        <button ion-button (click)="borrarItem(elemento);">Borrar</button>
       </ion-item-options>
     </ion-item-sliding>
-  </ion-list>
+  </ion-list> 
 </ion-content>
 <ion-footer class="footer">
   <ion-grid>

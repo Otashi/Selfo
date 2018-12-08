@@ -24,10 +24,10 @@
 
     <ion-img class="imgRest" src='{{myRestaurante?.fotoRestaurante}}'></ion-img>
 
-    <platos-list [titulo]="entranteTitulo" [lista]="entranteList" *ngIf="entranteList?.length > 0"></platos-list>
-    <platos-list [titulo]="primeroTitulo" [lista]="primeroList" *ngIf="primeroList?.length > 0"></platos-list>
-    <platos-list [titulo]="segundoTitulo" [lista]="segundoList" *ngIf="segundoList?.length > 0"></platos-list>
-    <platos-list [titulo]="postreTitulo" [lista]="postreList" *ngIf="postreList?.length > 0"></platos-list>
-    <platos-list [titulo]="bebidaTitulo" [lista]="bebidaList" *ngIf="bebidaList?.length > 0"></platos-list>
+    <platos-list [idPedido] = "myPedido.key" [titulo]="entranteTitulo" [lista]="entranteList" *ngIf="entranteList?.length > 0"></platos-list>
+    <platos-list [idPedido] = "myPedido.key" [titulo]="primeroTitulo" [lista]="primeroList" *ngIf="primeroList?.length > 0"></platos-list>
+    <platos-list [idPedido] = "myPedido.key" [titulo]="segundoTitulo" [lista]="segundoList" *ngIf="segundoList?.length > 0"></platos-list>
+    <platos-list [idPedido] = "myPedido.key" [titulo]="postreTitulo" [lista]="postreList" *ngIf="postreList?.length > 0"></platos-list>
+    <platos-list [idPedido] = "myPedido.key" [titulo]="bebidaTitulo" [lista]="bebidaList" *ngIf="bebidaList?.length > 0"></platos-list>
 
 </ion-content>

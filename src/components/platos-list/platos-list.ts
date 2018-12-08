@@ -15,12 +15,13 @@ import { ModalController } from 'ionic-angular';
 export class PlatosListComponent {
   @Input() lista: Item[];
   @Input() titulo: string;
+  @Input() idPedido: string;
 
   constructor(private modal: ModalController) {
   }
 
   openModal(myData:Item){
-    const myModal = this.modal.create('DetalleitemPage', {item: myData});
+    const myModal = this.modal.create('DetalleitemPage', {item: myData, idPedido: this.idPedido});
     myModal.present();
   }
 }

@@ -44,20 +44,26 @@ export class MenuPage {
   myPedido: Pedido;
   pedidoBorrador: Pedido;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService,
+  constructor(private authService: AuthService, public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService,
     public restauranteService: RestauranteService, private modalController: ModalController, private menuCtrl: MenuController,
-    private pedidoService: PedidoService, private authService: AuthService, private pedidoactualService: PedidoactualService) {
+    private pedidoService: PedidoService, private pedidoactualService: PedidoactualService) {
 
       this.myPedido = new Pedido();
      }
 
   ionViewDidLoad() {
     console.log("CHECK PEDIDO SIN ACABAR");
-    this.pedidoactualService.checkPedidoSinAcabar();
+    //this.pedidoactualService.checkPedidoSinAcabar();
   }
 
   ionViewWillLoad(){
-    //this.pedidoactualService.checkPedidoSinAcabar();
+    this.pedidoactualService.checkPedidoSinAcabar().subscribe(val =>{
+      val.forEach(pedido => {
+        if(pedido.estado == Estado.Borrador || pedido.estado == Estado.EnProceso){ //Si un pedido está en borrador o en proceso lo añado a mi pedido actual
+          this.myPedido = pedido;
+        }
+      })
+    });
     this.idRestaurante = 'R0000'; //Borrar
     //Recoge el valor escaneado
     //this.idRestaurante = this.navParams.get('idRestaurante');
@@ -95,7 +101,7 @@ export class MenuPage {
   }
 
   openModalDetallePedido(){
-    const myModal = this.modalController.create('DetallepedidoPage', {platos: this.pedidoactualService.getItemList(), restaurante: this.myRestaurante, paginaIniciadora:'Menu'});
+    const myModal = this.modalController.create('DetallepedidoPage', {pedido: this.myPedido, restaurante: this.myRestaurante, paginaIniciadora:'Menu'});
     myModal.present();
   }
 }

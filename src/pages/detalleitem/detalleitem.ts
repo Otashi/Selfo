@@ -20,22 +20,19 @@ export class DetalleitemPage {
   myItem : Item;
   options : any;
   cantidad: number = 1;
+  idPedido: string;
+  cantidadItem: number;
   constructor(public view: ViewController, public navParams: NavParams, private pedidoactualService: PedidoactualService) {
   }
 
   ionViewDidLoad(){
-    console.log('ionViewDidLoad MenuPage');
-    if(this.pedidoactualService.myItemsPedido == null){
-      console.log("NO TENGO PEDIDOS");
-      //CREAR PEDIDO
-    }
-    else{
-      console.log("Tengo pedidooooooo");
-    }
   }
 
   ionViewWillLoad() {
     this.myItem = this.navParams.get('item');
+    this.idPedido = this.navParams.get('idPedido');
+    console.log(this.myItem.key);
+    this.getMismoItemFromPedido();
     //this.myItem.key = this.navParams.get('item').$key;
   }
 
@@ -54,8 +51,21 @@ export class DetalleitemPage {
   }
 
   anadirItemAPedido(){
-    console.log(this.myItem.key);
-    this.pedidoactualService.addItemPedido(this.myItem.key, this.cantidad);
+    if(this.cantidadItem){
+      this.cantidadItem = this.cantidadItem + this.cantidad;
+      console.log(this.cantidadItem);
+    }
+    else{
+      this.cantidadItem = this.cantidad;
+    } 
+    this.pedidoactualService.addItemPedido(this.myItem.key, this.cantidadItem, this.idPedido);
     this.cerrarModal();
+  }
+
+  getMismoItemFromPedido(){
+    this.pedidoactualService.getNumeroItemsPorPedido(this.idPedido, this.myItem.key).subscribe(values => {
+      this.cantidadItem = values;
+    });
+    // console.log(mismoItem);
   }
 }
