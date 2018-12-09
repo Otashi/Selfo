@@ -108,4 +108,11 @@ export class DetallepedidoPage implements AfterContentChecked{
   deletePedido(){
     this.pedidoService.deletePedido(this.auth.getUid(), this.myPedido.key, this.myPedido.idRestaurante);
   }
+
+  mostrarMenu(){
+    this.view.dismiss(this.myPedido.idRestaurante);
+    /*this.navCtrl.push('MenuPage', {
+      idRestaurante: this.myPedido.idRestaurante
+     });*/
+    }
 }

@@ -40,7 +40,10 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-          <button ion-button primary>Pedir</button>
+          <button ion-button primary (click)="aceptarPedido()">Pedir</button>
+      </ion-col>
+      <ion-col>
+          <button *ngIf="paginaIniciadora=='MisPedidos'" ion-button primary (click)="mostrarMenu()">Menu</button>
       </ion-col>
       <ion-col>
           <label class="total">Total: {{total}} €</label>

@@ -84,5 +84,12 @@ export class MispedidosPage {
     //console.log(this.getRestauranteById(myPedido.idRestaurante));
     const myModal = this.modalController.create('DetallepedidoPage', {pedido: myPedido, restaurante: this.getRestauranteById(myPedido.idRestaurante), paginaIniciadora:'MisPedidos'});
     myModal.present();
+    myModal.onDidDismiss(data => {
+      if(data){
+        this.navCtrl.push('MenuPage', {
+          idRestaurante: data
+         });
+      }
+ });
   }
 }

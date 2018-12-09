@@ -52,12 +52,10 @@ export class MenuPage {
      }
 
   ionViewDidLoad() {
-    console.log("CHECK PEDIDO SIN ACABAR");
     //this.pedidoactualService.checkPedidoSinAcabar();
   }
 
   ionViewWillLoad(){
-    console.log("ION VIEW WILL LOAD")
     this.idRestaurante = 'R0000'; //Borrar
     //Recoge el valor escaneado
     //this.idRestaurante = this.navParams.get('idRestaurante');

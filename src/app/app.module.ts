@@ -30,6 +30,8 @@ import { HomePageModule } from '../pages/home/home.module';
 import { LoginPageModule } from '../pages/login/login.module';
 import { PerfilPageModule } from '../pages/perfil/perfil.module';
 import { MispedidosPageModule } from '../pages/mispedidos/mispedidos.module';
+import { DetalleitemPageModule } from '../pages/detalleitem/detalleitem.module';
+import { DetallepedidoPageModule } from '../pages/detallepedido/detallepedido.module';
 
 
 @NgModule({
@@ -46,6 +48,8 @@ import { MispedidosPageModule } from '../pages/mispedidos/mispedidos.module';
     LoginPageModule,
     PerfilPageModule,
     MispedidosPageModule,
+    DetalleitemPageModule,
+    DetallepedidoPageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [],
