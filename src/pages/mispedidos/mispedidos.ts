@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { PedidoService } from '../../services/pedido.service';
 import { AuthService } from '../../services/auth.service';
 import { Pedido, Estado } from '../../model/pedido';
@@ -23,9 +23,10 @@ export class MispedidosPage {
 
   myPedidos: Pedido[];
   mapRestaurante: Map<string, Restaurante>;
+  myRestaurante: Restaurante;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private pedidoService: PedidoService, 
-    private authService: AuthService, private restauranteService: RestauranteService) {
+    private authService: AuthService, private restauranteService: RestauranteService, private modalController: ModalController) {
       this.mapRestaurante = new Map<string, Restaurante>();
   }
 
@@ -52,6 +53,14 @@ export class MispedidosPage {
       return this.mapRestaurante.get(idRestaurante).nombre;
     }
   }
+
+  getRestauranteById(idRestaurante: string){
+    if(this.mapRestaurante.get(idRestaurante)){
+      this.myRestaurante = this.mapRestaurante.get(idRestaurante);
+      return this.myRestaurante;
+    }
+  }
+
   getEstadoPedido(idEstado: number){
     switch(idEstado) { 
       case Estado.Borrador: { 
@@ -70,4 +79,10 @@ export class MispedidosPage {
    }
   }
 
+  openModalDetallePedido(myPedido: Pedido){
+    //console.log(myPedido);
+    //console.log(this.getRestauranteById(myPedido.idRestaurante));
+    const myModal = this.modalController.create('DetallepedidoPage', {pedido: myPedido, restaurante: this.getRestauranteById(myPedido.idRestaurante), paginaIniciadora:'MisPedidos'});
+    myModal.present();
+  }
 }

@@ -23,11 +23,11 @@
     <ion-item-sliding *ngFor="let elemento of myItemList; let i = index" [attr.data-index]="i">
         <ion-item text-wrap>
           <ion-thumbnail item-left>
-            <img src="{{elemento?.item.urlImage}}">
+            <img src="{{elemento?.item?.urlImage}}">
           </ion-thumbnail>
           <ion-label>
-            <p>{{ elemento?.cantidad }} X {{ elemento?.item.titulo }}</p>
-            <p class="precio">{{elemento?.item.precio}} €</p>
+            <p>{{ elemento?.cantidad }} X {{ elemento?.item?.titulo }}</p>
+            <p class="precio">{{elemento?.item?.precio}} €</p>
           </ion-label>
         </ion-item>
       <ion-item-options side="right">

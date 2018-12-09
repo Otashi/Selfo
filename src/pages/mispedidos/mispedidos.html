@@ -19,7 +19,7 @@
 <ion-content padding>
   <ion-list>
     <div *ngFor="let pedido of myPedidos">
-      <ion-item text-wrap (click) = "openModal(pedido)">
+      <ion-item text-wrap (click) = "openModalDetallePedido(pedido)">
         <ion-thumbnail item-left>
           <img src="{{getFotoRestauranteById(pedido?.idRestaurante)}}">
         </ion-thumbnail>
