@@ -87,7 +87,7 @@ export class PedidoactualService {
     this.db.object('/pedidos/' + idUser + '/' + idRestaurante + '/' + key).update(pedido);
     return key;
   }
-
+  
   getCantidadItemsPorPedido(idPedido: string){
     return this.db.list('pedidoitem/' + idPedido).snapshotChanges();
   }

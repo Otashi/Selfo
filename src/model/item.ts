@@ -5,9 +5,9 @@ export class Item {
   descripcion: string;
   idRestaurante: string;
   categoria: number;
-  precio: string
+  precio: number;
 
-  constructor (key: string, titulo: string, descripcion: string, idRestaurante: string, categoria: number, precio: string){
+  constructor (key: string, titulo: string, descripcion: string, idRestaurante: string, categoria: number, precio: number){
       this.key = key;
       this.titulo = titulo;
       this.descripcion = descripcion;

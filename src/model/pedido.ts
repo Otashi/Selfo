@@ -4,7 +4,7 @@ export class Pedido {
     mesa: string;
     fecha: string;
     estado: number;
-    total: string;
+    total: number;
     idRestaurante: string;
 
     constructor (){

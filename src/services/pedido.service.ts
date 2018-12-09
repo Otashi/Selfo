@@ -22,7 +22,10 @@ export class PedidoService {
     });*/
 
   }
-
+  deletePedido(idUsuario: string, idPedido: string, idRestaurante: string){
+    this.db.object('/pedidosporusuario/' + idUsuario + '/' + idPedido).remove();
+    this.db.object('/pedidos/' + idUsuario + '/' + idRestaurante + '/' + idPedido).remove();    
+  }
   getPedidosUsuario(userid:string){
     return this.db.list<Pedido>('/pedidosporusuario/' + userid).snapshotChanges()
     .map(val => {
@@ -36,6 +39,16 @@ export class PedidoService {
     .map(val => {
       return val.map( c => ({key: c.payload.key, ...c.payload.val()}));
     });
+  }
+
+  actualizarPrecioPedido(idUsuario: string, idRestaurante: string, idPedido: string, precio: number){
+    this.db.object('pedidos/' + idUsuario + '/' + idRestaurante + '/' + idPedido).update({
+      total: precio
+    });
+
+    this.db.object('pedidosporusuario/' + idUsuario  + '/' + idPedido).update({
+      total: precio
+    })
   }
     /*
     addNote(note: Item) {

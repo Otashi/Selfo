@@ -22,9 +22,10 @@ export class DetalleitemPage {
 
   myItem : Item;
   cantidad: number = 1;
-  idPedido: string;
+  myPedido: Pedido;
   cantidadItem: number;
   idNewPedido: string;
+  idPedido: string;
   constructor(public view: ViewController, public navParams: NavParams, private pedidoactualService: PedidoactualService,
     private auth: AuthService, private toastController: ToastController, private pedidoService: PedidoService) {
   }
@@ -34,10 +35,14 @@ export class DetalleitemPage {
 
   ionViewWillLoad() {
     this.myItem = this.navParams.get('item');
-    this.idPedido = this.navParams.get('idPedido');
+    this.myPedido = this.navParams.get('idPedido');
     console.log(this.myItem.idRestaurante);
-    if(this.idPedido){
+    if(this.myPedido){
+      this.idPedido = this.myPedido.key;
       this.getMismoItemFromPedido();
+    }
+    else {
+      this.myPedido = new Pedido();
     }
     //this.myItem.key = this.navParams.get('item').$key;
   }
@@ -57,21 +62,21 @@ export class DetalleitemPage {
   }
 
   anadirItemAPedido(){
-    if(this.idPedido)
+    if(this.myPedido.key)
     {
       if(this.cantidadItem){
         this.cantidadItem = this.cantidadItem + this.cantidad;
-        console.log(this.cantidadItem);
+        //console.log(this.cantidadItem);
       }
       else{
         this.cantidadItem = this.cantidad;
-      } 
+      }
       this.pedidoactualService.addItemPedido(this.myItem.key, this.cantidadItem, this.idPedido);
+      this.pedidoService.actualizarPrecioPedido(this.auth.getUid(), this.myPedido.idRestaurante, this.myPedido.key, this.calcularTotal());
     } else {
       //Crear pedido
       this.createPedido();
-      console.log(this.idNewPedido);
-      this.pedidoactualService.addItemPedido(this.myItem.key, this.cantidad, this.idNewPedido);
+      this.pedidoactualService.addItemPedido(this.myItem.key, this.cantidad, this.idPedido);
     }
     this.mostrarToast("Plato añadido a tu pedido");
     //TODO hay que actualizar el precio.
@@ -86,15 +91,14 @@ export class DetalleitemPage {
   }
 
   createPedido(){
-    var newPedido = new Pedido();
     var date = new Date();
-    newPedido.fecha = date.toLocaleDateString();
-    newPedido.estado = Estado.Borrador;
-    newPedido.idRestaurante = this.myItem.idRestaurante;
-    newPedido.mesa = "99";
-    newPedido.total = '0';
-    this.idNewPedido = this.pedidoactualService.createPedido(this.auth.getUid(), this.myItem.idRestaurante, newPedido);
-    this.pedidoService.createPedido(newPedido, this.auth.getUid(), this.idNewPedido);
+    this.myPedido.fecha = date.toLocaleDateString();
+    this.myPedido.estado = Estado.Borrador;
+    this.myPedido.idRestaurante = this.myItem.idRestaurante;
+    this.myPedido.mesa = "99";
+    this.myPedido.total = this.calcularTotal();
+    this.idPedido = this.pedidoactualService.createPedido(this.auth.getUid(), this.myItem.idRestaurante, this.myPedido);
+    this.pedidoService.createPedido(this.myPedido, this.auth.getUid(), this.idPedido);
 
   }
 
@@ -105,5 +109,13 @@ export class DetalleitemPage {
       position: 'bot'
     });
     toast.present();
+  }
+
+  calcularTotal(): number{
+    if(this.myPedido.key){//Pedido existente y sumar el item al total
+      return this.myPedido.total + this.myItem.precio * this.cantidad;
+    } else {//Pedido nuevo, entonces solo añadir el item actual al total
+      return this.myItem.precio*this.cantidad;
+    }
   }
 }

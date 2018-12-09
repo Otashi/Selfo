@@ -20,7 +20,7 @@
   <ion-img class="imgRest" src='{{myRestaurante?.fotoRestaurante}}'></ion-img>
   <h3>{{myRestaurante?.nombre}}</h3>
   <ion-list>
-    <ion-item-sliding *ngFor="let elemento of myItemList">
+    <ion-item-sliding *ngFor="let elemento of myItemList; let i = index" [attr.data-index]="i">
         <ion-item text-wrap>
           <ion-thumbnail item-left>
             <img src="{{elemento?.item.urlImage}}">

@@ -6,6 +6,8 @@ import { Itempedido } from '../../model/itempedido';
 import { Pedido, Estado } from '../../model/pedido';
 import { myAlert } from '../../utils/helper';
 import { Item } from '../../model/item';
+import { AuthService } from '../../services/auth.service';
+import { PedidoService } from '../../services/pedido.service';
 
 /**
  * Generated class for the DetallepedidoPage page.
@@ -30,7 +32,7 @@ export class DetallepedidoPage implements AfterContentChecked{
   itemDetaill: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController, private pedidoactualService: PedidoactualService,
-    private toasController: ToastController, private alertController: AlertController) {
+    private toasController: ToastController, private alertController: AlertController, private auth: AuthService, private pedidoService: PedidoService) {
       this.myItemList = [];
   }
 
@@ -46,7 +48,12 @@ export class DetallepedidoPage implements AfterContentChecked{
       console.log(this.myPedido.key);
       this.pedidoactualService.getAllItemsPedido(this.myPedido.key)
       .subscribe( values => {
+        console.log("Actualizo la lista de pedidos");
         this.myItemList = values;
+        if(this.myItemList.length == 0) //No hay items en el pedido. Borrar el pedido
+        {
+          this.deletePedido();
+        }
       });
       
     } else {
@@ -64,20 +71,16 @@ export class DetallepedidoPage implements AfterContentChecked{
   }
 
   ngAfterContentChecked(){
-    this.total = 0;
-    if(this.myItemList !== undefined) {
-      this.total = this.myItemList.reduce((acumulado, valor) => 
-        valor.item !== undefined ? acumulado + (parseFloat(valor.item.precio) * valor.cantidad) : 0, 0);
-    }
+    this.calcularTotal();
+    //this.actualizarPrecioPedido();
   }
 
   borrarItem(item: Itempedido){
-    // console.log(this.myItemList[index]);
-    // this.myItemList.splice(index,1);
+    //console.log(this.myItemList[index]);
     //console.log(this.myPedido.key + '- '+ item.itemKey);
     this.pedidoactualService.deleteItemPedido(this.myPedido.key, item.itemKey);
     this.mostrarToast("Plato eliminado de tu pedido");
-    //this.pedidoactualService.actualizarPrecioPedido(this.total);
+    this.calcularTotal();
   }
 
   mostrarToast(mensaje: string){
@@ -87,5 +90,21 @@ export class DetallepedidoPage implements AfterContentChecked{
       position: 'top'
     });
     toast.present();
+  }
+  actualizarPrecioPedido(){
+    //console.log(this.myRestaurante.key + ' - ' + this.myPedido.key + ' - ' + this.total);
+    this.pedidoService.actualizarPrecioPedido(this.auth.getUid(), this.myRestaurante.key, this.myPedido.key, this.total);
+  }
+
+  calcularTotal(){
+    this.total = 0;
+    if(this.myItemList !== undefined) {
+      this.total = this.myItemList.reduce((acumulado, valor) => 
+        valor.item !== undefined ? acumulado + (valor.item.precio * valor.cantidad) : 0, 0);
+        //this.actualizarPrecioPedido();
+    }
+  }
+  deletePedido(){
+    this.pedidoService.deletePedido(this.auth.getUid(), this.myPedido.key, this.myPedido.idRestaurante);
   }
 }

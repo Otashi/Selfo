@@ -49,8 +49,6 @@ export class MenuPage {
   constructor(private authService: AuthService, public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService,
     public restauranteService: RestauranteService, private modalController: ModalController, private menuCtrl: MenuController,
     private pedidoService: PedidoService, private pedidoactualService: PedidoactualService) {
-
-      this.myPedido = new Pedido();
      }
 
   ionViewDidLoad() {
@@ -59,7 +57,7 @@ export class MenuPage {
   }
 
   ionViewWillLoad(){
-    this.idRestaurante = 'R0000'; //Borrar
+    this.idRestaurante = 'R0001'; //Borrar
     //Recoge el valor escaneado
     //this.idRestaurante = this.navParams.get('idRestaurante');
     //this.mesa = this.navParams.get('mesa'); //Cuando se tenga la mesa en el QR
@@ -67,6 +65,7 @@ export class MenuPage {
 
     this.restauranteService.getRestauranteById(this.idRestaurante).subscribe(value => {
       this.myRestaurante = value;
+      this.myRestaurante.key = this.idRestaurante;
     });
 
     this.menuService.getItemList(this.idRestaurante).subscribe(values => {
@@ -77,13 +76,17 @@ export class MenuPage {
       this.postreList = this.itemList.filter(value => value.categoria === 3);
       this.bebidaList = this.itemList.filter(value => value.categoria === 4);
     });
-    this.numItems = 0;
+  }
 
+  ionViewWillEnter() {
+    this.numItems = 0;
+    this.myPedido = new Pedido();
+    console.log("IONVIEW ENTERRRRR");
     this.pedidoactualService.checkPedidoSinAcabar(this.idRestaurante).subscribe(val =>{
       console.log(val);
       if(val[0]){
         this.myPedido = val[0] as Pedido;
-        console.log(this.myPedido);
+        //console.log(this.myPedido);
         this.pedidoactualService.getCantidadItemsPorPedido(this.myPedido.key).subscribe(val=>{
           this.numItems = 0;
           val.forEach(elemento => {
@@ -92,16 +95,16 @@ export class MenuPage {
             //console.log(valor.cantidad);
           })
         })
-        console.log(this.numItems);
       } 
     });
   }
 
-  ionViewWillEnter() {
-  }
-
   openModalDetallePedido(){
     const myModal = this.modalController.create('DetallepedidoPage', {pedido: this.myPedido, restaurante: this.myRestaurante, paginaIniciadora:'Menu'});
+    myModal.onDidDismiss(() => {
+      this.ionViewWillEnter();
+    });
     myModal.present();
   }
+
 }
