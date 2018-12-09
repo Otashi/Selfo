@@ -45,10 +45,10 @@ export class DetallepedidoPage implements AfterContentChecked{
     if(this.myPedido.key){
       /* this.getItemsPerPedido();
       this.calcularTotal(); */
-      console.log(this.myPedido.key);
+      //console.log(this.myPedido.key);
       this.pedidoactualService.getAllItemsPedido(this.myPedido.key)
       .subscribe( values => {
-        console.log("Actualizo la lista de pedidos");
+        //console.log("Actualizo la lista de pedidos");
         this.myItemList = values;
         if(this.myItemList.length == 0) //No hay items en el pedido. Borrar el pedido
         {
@@ -75,12 +75,12 @@ export class DetallepedidoPage implements AfterContentChecked{
     //this.actualizarPrecioPedido();
   }
 
-  borrarItem(item: Itempedido){
-    //console.log(this.myItemList[index]);
+  borrarItem(item: Itempedido, i: any){
+    var totalActualizado = this.total - (this.myItemList[i].cantidad*this.myItemList[i].item.precio);
+    this.actualizarPrecioPedido(totalActualizado);
     //console.log(this.myPedido.key + '- '+ item.itemKey);
     this.pedidoactualService.deleteItemPedido(this.myPedido.key, item.itemKey);
     this.mostrarToast("Plato eliminado de tu pedido");
-    this.calcularTotal();
   }
 
   mostrarToast(mensaje: string){
@@ -91,14 +91,15 @@ export class DetallepedidoPage implements AfterContentChecked{
     });
     toast.present();
   }
-  actualizarPrecioPedido(){
+  actualizarPrecioPedido(precioTotal: number){
     //console.log(this.myRestaurante.key + ' - ' + this.myPedido.key + ' - ' + this.total);
-    this.pedidoService.actualizarPrecioPedido(this.auth.getUid(), this.myRestaurante.key, this.myPedido.key, this.total);
+    this.pedidoService.actualizarPrecioPedido(this.auth.getUid(), this.myRestaurante.key, this.myPedido.key, precioTotal);
   }
 
   calcularTotal(){
     this.total = 0;
     if(this.myItemList !== undefined) {
+      //console.log(this.total);
       this.total = this.myItemList.reduce((acumulado, valor) => 
         valor.item !== undefined ? acumulado + (valor.item.precio * valor.cantidad) : 0, 0);
         //this.actualizarPrecioPedido();

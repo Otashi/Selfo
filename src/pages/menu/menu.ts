@@ -57,7 +57,8 @@ export class MenuPage {
   }
 
   ionViewWillLoad(){
-    this.idRestaurante = 'R0001'; //Borrar
+    console.log("ION VIEW WILL LOAD")
+    this.idRestaurante = 'R0000'; //Borrar
     //Recoge el valor escaneado
     //this.idRestaurante = this.navParams.get('idRestaurante');
     //this.mesa = this.navParams.get('mesa'); //Cuando se tenga la mesa en el QR
