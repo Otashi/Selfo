@@ -80,14 +80,14 @@ export class DetallepedidoPage implements AfterContentChecked{
     this.actualizarPrecioPedido(totalActualizado);
     //console.log(this.myPedido.key + '- '+ item.itemKey);
     this.pedidoactualService.deleteItemPedido(this.myPedido.key, item.itemKey);
-    this.mostrarToast("Plato eliminado de tu pedido");
+    this.mostrarToast("Plato eliminado de tu pedido", 'top');
   }
 
-  mostrarToast(mensaje: string){
+  mostrarToast(mensaje: string, donde: string){
     let toast = this.toasController.create({
       message: mensaje,
       duration: 1500,
-      position: 'top'
+      position: donde
     });
     toast.present();
   }
@@ -134,6 +134,8 @@ export class DetallepedidoPage implements AfterContentChecked{
             handler: () => {
               console.log('Acceptar clicked');
               this.cambiarEstadoPedido(Estado.EnProceso);
+              this.mostrarToast("Pedido hecho correctamente", "middle");
+              this.cerrarModal();
             }
           }
         ]
