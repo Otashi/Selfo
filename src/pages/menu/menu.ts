@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, MenuController, AlertController } from 'ionic-angular';
 import { Item } from '../../model/item';
 import { MenuService } from '../../services/menu.service'
 import { RestauranteService } from '../../services/restaurante.service'
@@ -9,10 +9,8 @@ import { Pedido, Estado } from '../../model/pedido';
 import 'rxjs/add/operator/map';
 import { AuthService } from '../../services/auth.service';
 import { PedidoactualService } from '../../services/pedidoactual.service';
-import { ThrowStmt } from '@angular/compiler';
 import { Itempedido } from '../../model/itempedido';
-
-
+import { myAlert } from '../../utils/helper';
 /**
  * Generated class for the MenuPage page.
  *
@@ -48,7 +46,7 @@ export class MenuPage {
 
   constructor(private authService: AuthService, public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService,
     public restauranteService: RestauranteService, private modalController: ModalController, private menuCtrl: MenuController,
-    private pedidoService: PedidoService, private pedidoactualService: PedidoactualService) {
+    private pedidoService: PedidoService, private pedidoactualService: PedidoactualService, private alertControl: AlertController) {
      }
 
   ionViewDidLoad() {
@@ -61,7 +59,7 @@ export class MenuPage {
     this.idRestaurante = this.navParams.get('idRestaurante');
     //this.mesa = this.navParams.get('mesa'); //Cuando se tenga la mesa en el QR
     //console.log(this.idRestaurante);
-
+    myAlert(this.idRestaurante, "ID REST", this.alertControl);
     this.restauranteService.getRestauranteById(this.idRestaurante).subscribe(value => {
       this.myRestaurante = value;
       this.myRestaurante.key = this.idRestaurante;

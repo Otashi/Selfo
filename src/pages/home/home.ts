@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, ModalCmp, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, ModalCmp, ModalController, AlertController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service'
-import { LoginPage } from '../login/login';
 
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
-import { PedidoactualService } from '../../services/pedidoactual.service';
-
+import { myAlert } from '../../utils/helper';
 
 /**
  * Generated class for the HomePage page.
@@ -22,7 +20,8 @@ import { PedidoactualService } from '../../services/pedidoactual.service';
 export class HomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthService,
-    private qrScanner: QRScanner, private menuCtrl: MenuController, private modalController: ModalController) {
+    private qrScanner: QRScanner, private menuCtrl: MenuController, private modalController: ModalController,
+    private alertController: AlertController) {
     if(!this.auth.authenticated){
       console.log("Not logged");
       //this.navCtrl.setRoot(LoginPage);
@@ -48,10 +47,10 @@ export class HomePage {
 
          this.qrScanner.hide(); // hide camera preview
          scanSub.unsubscribe(); // stop scanning
-         this.navCtrl.push('MenuPage', {
+         myAlert(text.result, "Escaneado", this.alertController);
+         /*this.navCtrl.push('MenuPage', {
           idRestaurante: text.result
-         });
-
+         });*/
        });
 
      } else if (status.denied) {
