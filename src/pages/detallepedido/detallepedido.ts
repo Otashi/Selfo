@@ -55,7 +55,7 @@ export class DetallepedidoPage implements AfterContentChecked{
           this.deletePedido();
         }
       });
-      
+
     } else {
       myAlert("No tiene pedido activo en este restaurante", "Información", this.alertController);
     }
@@ -67,7 +67,7 @@ export class DetallepedidoPage implements AfterContentChecked{
 
   ionViewWillLoad() {
     console.log('ionViewWillLoad DetallepedidoPage');
-    
+
   }
 
   ngAfterContentChecked(){
@@ -100,7 +100,7 @@ export class DetallepedidoPage implements AfterContentChecked{
     this.total = 0;
     if(this.myItemList !== undefined) {
       //console.log(this.total);
-      this.total = this.myItemList.reduce((acumulado, valor) => 
+      this.total = this.myItemList.reduce((acumulado, valor) =>
         valor.item !== undefined ? acumulado + (valor.item.precio * valor.cantidad) : 0, 0);
         //this.actualizarPrecioPedido();
     }
@@ -115,4 +115,60 @@ export class DetallepedidoPage implements AfterContentChecked{
       idRestaurante: this.myPedido.idRestaurante
      });*/
     }
+
+  hacerPedido()
+  {
+      let alert = this.alertController.create({
+        title: 'Ralizar pedido',
+        message: '¿Desea realizar el pedido?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+             // console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Acceptar',
+            handler: () => {
+              console.log('Acceptar clicked');
+              this.cambiarEstadoPedido(Estado.EnProceso);
+            }
+          }
+        ]
+      });
+      alert.present();
+    }
+
+    cambiarEstadoPedido(estado: Estado){
+      console.log(estado);
+      this.pedidoService.cambiarEstado(this.auth.getUid(), this.myPedido.key, this.myPedido.idRestaurante, estado);
+    }
+
+    finalizarPedido()
+    {
+        let alert = this.alertController.create({
+          title: 'Finalizar pedido',
+          message: '¿Desea finalizar el pedido?',
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+               // console.log('Cancel clicked');
+              }
+            },
+            {
+              text: 'Acceptar',
+              handler: () => {
+                console.log('Acceptar clicked');
+                this.cambiarEstadoPedido(Estado.Finalizado);
+                this.view.dismiss('cerrarView');
+              }
+            }
+          ]
+        });
+        alert.present();
+      }
 }

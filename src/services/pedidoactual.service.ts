@@ -28,7 +28,7 @@ export class PedidoactualService {
   checkPedidoSinAcabar(idRestaurante: string) : Observable<{}>{
     //console.log("CHECK PEDIDO!!!!!!!!!!!");
     this.userId = this.afaService.auth.currentUser.uid;
-    return this.db.list('pedidos/' + this.userId + '/' + idRestaurante, ref => ref.orderByChild('estado').equalTo(0)).snapshotChanges()
+    return this.db.list('pedidos/' + this.userId + '/' + idRestaurante, ref => ref.orderByChild('estado').startAt(0).endAt(1)).snapshotChanges()
     .map(val=>{
       return val.map(c => ({key: c.payload.key, ...c.payload.val()}))
     });
@@ -87,7 +87,7 @@ export class PedidoactualService {
     this.db.object('/pedidos/' + idUser + '/' + idRestaurante + '/' + key).update(pedido);
     return key;
   }
-  
+
   getCantidadItemsPorPedido(idPedido: string){
     return this.db.list('pedidoitem/' + idPedido).snapshotChanges();
   }

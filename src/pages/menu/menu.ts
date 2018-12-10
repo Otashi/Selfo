@@ -94,14 +94,18 @@ export class MenuPage {
             //console.log(valor.cantidad);
           })
         })
-      } 
+      }
     });
   }
 
   openModalDetallePedido(){
     const myModal = this.modalController.create('DetallepedidoPage', {pedido: this.myPedido, restaurante: this.myRestaurante, paginaIniciadora:'Menu'});
-    myModal.onDidDismiss(() => {
+    myModal.onDidDismiss(data => {
       this.ionViewWillEnter();
+      if(data){
+        console.log(data);
+        this.navCtrl.setRoot('HomePage');
+      }
     });
     myModal.present();
   }

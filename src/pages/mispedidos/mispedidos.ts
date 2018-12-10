@@ -25,7 +25,7 @@ export class MispedidosPage {
   mapRestaurante: Map<string, Restaurante>;
   myRestaurante: Restaurante;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private pedidoService: PedidoService, 
+  constructor(public navCtrl: NavController, public navParams: NavParams, private pedidoService: PedidoService,
     private authService: AuthService, private restauranteService: RestauranteService, private modalController: ModalController) {
       this.mapRestaurante = new Map<string, Restaurante>();
   }
@@ -40,7 +40,7 @@ export class MispedidosPage {
           this.mapRestaurante.set(pedido.idRestaurante, rest);
         })
       })
-    }); 
+    });
   }
 
   getFotoRestauranteById(idRestaurante: string){
@@ -62,20 +62,20 @@ export class MispedidosPage {
   }
 
   getEstadoPedido(idEstado: number){
-    switch(idEstado) { 
-      case Estado.Borrador: { 
+    switch(idEstado) {
+      case Estado.Borrador: {
          return "Borrador";
-      } 
-      case Estado.EnProceso: { 
+      }
+      case Estado.EnProceso: {
          return "En Proceso";
-      } 
+      }
       case Estado.Finalizado: {
         return "Finalizado";
-      } 
-      default: { 
-         console.log("Invalid choice"); 
-         break;              
-      } 
+      }
+      default: {
+         console.log("Invalid choice");
+         break;
+      }
    }
   }
 
@@ -86,9 +86,13 @@ export class MispedidosPage {
     myModal.present();
     myModal.onDidDismiss(data => {
       if(data){
-        this.navCtrl.push('MenuPage', {
-          idRestaurante: data
-         });
+        if(data == 'cerrarView'){
+          this.navCtrl.setRoot('HomePage');
+        } else {
+          this.navCtrl.push('MenuPage', {
+            idRestaurante: data
+          });
+        }
       }
  });
   }

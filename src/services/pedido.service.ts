@@ -24,7 +24,7 @@ export class PedidoService {
   }
   deletePedido(idUsuario: string, idPedido: string, idRestaurante: string){
     this.db.object('/pedidosporusuario/' + idUsuario + '/' + idPedido).remove();
-    this.db.object('/pedidos/' + idUsuario + '/' + idRestaurante + '/' + idPedido).remove();    
+    this.db.object('/pedidos/' + idUsuario + '/' + idRestaurante + '/' + idPedido).remove();
   }
   getPedidosUsuario(userid:string){
     return this.db.list<Pedido>('/pedidosporusuario/' + userid).snapshotChanges()
@@ -48,6 +48,16 @@ export class PedidoService {
 
     this.db.object('pedidosporusuario/' + idUsuario  + '/' + idPedido).update({
       total: precio
+    })
+  }
+
+  cambiarEstado(idUsuario: string, idPedido: string, idRestaurante:string, estado: number){
+    this.db.object('pedidos/' + idUsuario + '/' + idRestaurante + '/' + idPedido).update({
+      estado: estado
+    });
+
+    this.db.object('pedidosporusuario/' + idUsuario  + '/' + idPedido).update({
+      estado: estado
     })
   }
     /*

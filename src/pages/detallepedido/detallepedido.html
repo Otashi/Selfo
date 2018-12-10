@@ -34,16 +34,17 @@
         <button ion-button (click)="borrarItem(elemento, i);">Borrar</button>
       </ion-item-options>
     </ion-item-sliding>
-  </ion-list> 
+  </ion-list>
 </ion-content>
 <ion-footer class="footer">
   <ion-grid>
     <ion-row>
       <ion-col>
-          <button ion-button primary (click)="aceptarPedido()">Pedir</button>
+          <button *ngIf="myPedido?.estado==0" ion-button primary (click)="hacerPedido()">Pedir</button>
+          <button *ngIf="myPedido?.estado==1" ion-button primary (click)="finalizarPedido()">Finalizar</button>
       </ion-col>
       <ion-col>
-          <button *ngIf="paginaIniciadora=='MisPedidos'" ion-button primary (click)="mostrarMenu()">Menu</button>
+          <button *ngIf="paginaIniciadora=='MisPedidos' && (myPedido?.estado == 0 || myPedido?.estado==1)" ion-button primary (click)="mostrarMenu()">Menu</button>
       </ion-col>
       <ion-col>
           <label class="total">Total: {{total}} €</label>
