@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service'
 
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { myAlert } from '../../utils/helper';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 /**
  * Generated class for the HomePage page.
@@ -21,7 +22,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthService,
     private qrScanner: QRScanner, private menuCtrl: MenuController, private modalController: ModalController,
-    private alertController: AlertController) {
+    private alertController: AlertController, private barcodeScanner: BarcodeScanner) {
     if(!this.auth.authenticated){
       console.log("Not logged");
       //this.navCtrl.setRoot(LoginPage);
@@ -37,20 +38,21 @@ export class HomePage {
   }
 
   scanQR(){
+    /*
    this.qrScanner.prepare()
   .then((status: QRScannerStatus) => {
      if (status.authorized) {
        // camera permission was granted
        // start scanning
-       let scanSub = this.qrScanner.scan().subscribe((text: any) => {
-         console.log('Scanned something', text.result);
+       let scanSub = this.qrScanner.scan().subscribe((text: string) => {
+         console.log('Scanned something', text);
 
          this.qrScanner.hide(); // hide camera preview
          scanSub.unsubscribe(); // stop scanning
-         myAlert(text.result, "Escaneado", this.alertController);
+         myAlert(text, "Escaneado", this.alertController);
          /*this.navCtrl.push('MenuPage', {
           idRestaurante: text.result
-         });*/
+         });
        });
 
      } else if (status.denied) {
@@ -66,6 +68,11 @@ export class HomePage {
   /*this.navCtrl.push('MenuPage', {
     idRestaurante: 'Borrar'
    });*/
+   this.barcodeScanner.scan().then(barcodeData => {
+    console.log('Barcode data', barcodeData);
+   }).catch(err => {
+       console.log('Error', err);
+   });
   }
 
   openModalMisPedidos(){
