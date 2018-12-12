@@ -6,6 +6,7 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { myAlert } from '../../utils/helper';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
+
 /**
  * Generated class for the HomePage page.
  *
@@ -34,27 +35,28 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
+    window.document.querySelector('ion-app').classList.add('whiteBody');
     this.menuCtrl.enable(true);
   }
 
   scanQR(){
-    /*
    this.qrScanner.prepare()
   .then((status: QRScannerStatus) => {
      if (status.authorized) {
        // camera permission was granted
        // start scanning
+       window.document.querySelector('ion-app').classList.add('transparentBody');
        let scanSub = this.qrScanner.scan().subscribe((text: string) => {
          console.log('Scanned something', text);
 
          this.qrScanner.hide(); // hide camera preview
          scanSub.unsubscribe(); // stop scanning
-         myAlert(text, "Escaneado", this.alertController);
-         /*this.navCtrl.push('MenuPage', {
-          idRestaurante: text.result
+         this.navCtrl.push('MenuPage', {
+          idRestaurante: text
          });
+        this.qrScanner.destroy();
        });
-
+       this.qrScanner.show();
      } else if (status.denied) {
        // camera permission was permanently denied
        // you must use QRScanner.openSettings() method to guide the user to the settings page
@@ -68,14 +70,13 @@ export class HomePage {
   /*this.navCtrl.push('MenuPage', {
     idRestaurante: 'Borrar'
    });*/
-   this.barcodeScanner.scan().then(barcodeData => {
-    console.log('Barcode data', barcodeData);
-   }).catch(err => {
-       console.log('Error', err);
-   });
   }
 
   openModalMisPedidos(){
     this.navCtrl.push('MispedidosPage');
+  }
+
+  ionViewDidLeave() {
+    window.document.querySelector('ion-app').classList.add('whiteBody');
   }
 }

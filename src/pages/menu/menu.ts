@@ -59,7 +59,7 @@ export class MenuPage {
     this.idRestaurante = this.navParams.get('idRestaurante');
     //this.mesa = this.navParams.get('mesa'); //Cuando se tenga la mesa en el QR
     //console.log(this.idRestaurante);
-    myAlert(this.idRestaurante, "ID REST", this.alertControl);
+    //myAlert(this.idRestaurante, "ID REST", this.alertControl);
     this.restauranteService.getRestauranteById(this.idRestaurante).subscribe(value => {
       this.myRestaurante = value;
       this.myRestaurante.key = this.idRestaurante;
