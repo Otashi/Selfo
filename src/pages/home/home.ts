@@ -34,7 +34,7 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
-    window.document.querySelector('ion-app').classList.add('whiteBody');
+    //window.document.querySelector('ion-app').classList.add('whiteBody');
     this.menuCtrl.enable(true);
   }
 
@@ -54,6 +54,7 @@ export class HomePage {
           idRestaurante: text
          });
         this.qrScanner.destroy();
+
        });
        this.qrScanner.show();
      } else if (status.denied) {
