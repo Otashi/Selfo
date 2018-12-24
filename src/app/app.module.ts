@@ -18,6 +18,7 @@ import { QRScanner } from '@ionic-native/qr-scanner';
 import { UserService } from '../services/user.service';
 import { ImageService } from '../services/image.service';
 import { Camera } from '@ionic-native/camera';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { PedidoService } from '../services/pedido.service';
 import { PedidoactualService } from '../services/pedidoactual.service';
 import { HomePageModule } from '../pages/home/home.module';
@@ -61,6 +62,8 @@ import { DetallepedidoPageModule } from '../pages/detallepedido/detallepedido.mo
     Camera,
     PedidoService,
     PedidoactualService,
+    BarcodeScanner
+
   ]
 })
 export class AppModule {}
