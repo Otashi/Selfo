@@ -3,8 +3,6 @@ import { IonicPage, NavController, NavParams, MenuController, ModalCmp, ModalCon
 import { AuthService } from '../../services/auth.service'
 
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
-import { myAlert } from '../../utils/helper';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 
 /**
@@ -23,7 +21,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthService,
     private qrScanner: QRScanner, private menuCtrl: MenuController, private modalController: ModalController,
-    private alertController: AlertController, private barcodeScanner: BarcodeScanner) {
+    private alertController: AlertController) {
     if(!this.auth.authenticated){
       console.log("Not logged");
       //this.navCtrl.setRoot(LoginPage);
